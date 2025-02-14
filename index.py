@@ -1,14 +1,14 @@
 # /// script
-# requires-python = ">=3.13"
+# requires-python = '>=3.13'
 # dependencies = [
-#     "marimo",
-#     "polars==1.22.0",
+#     'marimo',
+#     'polars==1.22.0',
 # ]
 # ///
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = '0.11.4'
 app = marimo.App()
 
 
@@ -23,18 +23,18 @@ def _():
 def _(mo):
     mo.sidebar(
         [
-            mo.md("# testos"),
+            mo.md('# testos'),
             mo.nav_menu(
                 {
-                    "#/home": f"{mo.icon('lucide:home')} Home",
-                    "#/about": f"{mo.icon('lucide:user')} About",
-                    "#/contact": f"{mo.icon('lucide:phone')} Contact",
-                    "Links": {
-                        "/notebooks/penguins.html": "penguins",
-                        "/charts.html": "apps",
+                    '#/home': f'{mo.icon('lucide:home')} Home',
+                    '#/about': f'{mo.icon('lucide:user')} About',
+                    '#/contact': f'{mo.icon('lucide:phone')} Contact',
+                    'Links': {
+                        '/apps/heteroscedasticity.html': 'Heteroscedasticity',
+                        '/apps/hypothesis_testing.html': 'Hypothesis testing',
                     },
                 },
-                orientation="vertical",
+                orientation='vertical',
             ),
         ]
     )
@@ -71,5 +71,5 @@ def _():
     return
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()
