@@ -30,8 +30,8 @@ def _(mo):
                     "#/about": f"{mo.icon('lucide:user')} About",
                     "#/contact": f"{mo.icon('lucide:phone')} Contact",
                     "Links": {
-                        "/_site/notebooks/penguins.html": "penguins",
-                        "/_site/charts.html": "apps",
+                        "/notebooks/penguins.html": "penguins",
+                        "/charts.html": "apps",
                     },
                 },
                 orientation="vertical",
