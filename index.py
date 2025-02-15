@@ -29,8 +29,8 @@ def _(mo):
                     '#/about': f'{mo.icon('lucide:user')} About',
                     '#/contact': f'{mo.icon('lucide:phone')} Contact',
                     'Links': {
-                        '/apps/heteroscedasticity.html': 'Heteroscedasticity',
-                        '/apps/hypothesis_testing.html': 'Hypothesis testing',
+                        '/_site/apps/heteroscedasticity.html': 'Heteroscedasticity',
+                        '/_site/apps/hypothesis_testing.html': 'Hypothesis testing',
                     },
                 },
                 orientation='vertical',
