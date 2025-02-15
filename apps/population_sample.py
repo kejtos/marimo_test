@@ -1,7 +1,20 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.10.12"
-app = marimo.App(width="medium", layout_file="layouts/notebook.grid.json")
+__generated_with = "0.11.4"
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/population_sample.grid.json",
+)
 
 
 @app.cell
@@ -188,7 +201,8 @@ def _(
     )
 
     combined_chart = mo.ui.altair_chart(
-        beauty_altair(alt.vconcat(pop_hist, sample_hist).resolve_scale(x="shared"))
+        beauty_altair(alt.vconcat(pop_hist, sample_hist).resolve_scale(x="shared")),
+        chart_selection=False
     )
     return (
         bin_params,

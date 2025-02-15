@@ -187,9 +187,9 @@ def __(mo):
         """
         Heteroskedasticity (homoscedasticity) of the error term occurs when the variance for all observations in a data set are not (are) the same. It therefore makes the variance of the error term differ between observations, which is a vialoation of the Gauss-Markov thoerem. Specifically, it violates the assumption (MLR.5) that the conditional variance of the error term is constant, therefore
 
-        $$
+        \\[
         \\text{var}(u|X) \\neq \\sigma^2
-        $$
+        \\]
 
         When heteroskedasticity of the error term is present, then:
 
@@ -557,7 +557,7 @@ def __(mo):
         \\text{SE}(\\hat{\\beta}) = \\sqrt{\\text{diag}\\left( (X'X)^{-1} X' \\Omega X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( (X'X)^{-1} X' \\sigma^2 I X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( \\sigma^2 (X'X)^{-1} \\right)}
         \\]
 
-        White's robust standard errors get adjusted for heteroskedasticity by replacing $\\sigma_i^2$ with the squared OLS residuals $\\hat{u}_i^2$ and includes a degrees of freedom adjustment:
+        White's robust standard errors get adjusted for heteroskedasticity by replacing \\(\\sigma_i^2\\) with the squared OLS residuals \\(\\hat{u}_i^2\\) and includes a degrees of freedom adjustment:
 
         \\[
         \\text{SE}(\\hat{\\beta})^{\\text{Robust}} = \\sqrt{\\text{diag}\\left( \\frac{N}{N - K} \\cdot (X'X)^{-1} X' \\Omega X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( \\frac{N}{N - K} \\cdot (X'X)^{-1} \\left( \\sum_{i=1}^{N} \\hat{u}_i^2 \\cdot X_i X_i' \\right) (X'X)^{-1} \\right)}
@@ -565,13 +565,13 @@ def __(mo):
 
         #### b) Algebraic version
 
-        The standard error of the OLS estimator $\\beta_1$ in a simple linear regression model is given by:
+        The standard error of the OLS estimator \\(\\beta_1\\) in a simple linear regression model is given by:
 
         \\[
         \\text{SE}(\\hat{\\beta}_1) = \\sqrt{\\text{Var}(\\hat{\\beta}_1)} = \\sqrt{\\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2 \\sigma^2}{\\left(\\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}} = \\sqrt{\\frac{\\sigma^2}{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}}
         \\]
 
-        White's robust standard errors get adjusted for heteroskedasticity by replacing $\\sigma_i^2$ with the squared OLS residuals $\\hat{u}_i^2$ and includes a degrees of freedom adjustment:
+        White's robust standard errors get adjusted for heteroskedasticity by replacing \\(\\sigma_i^2\\) with the squared OLS residuals \\(\\hat{u}_i^2\\) and includes a degrees of freedom adjustment:
 
         \\[
         \\text{SE}(\\hat{\\beta}_1)^{\\text{robust}} = \\sqrt{\\text{Var}(\\hat{\\beta}_1)^{\\text{robust}}} = \\sqrt{\\frac{N}{N - K} \\cdot \\frac{\\sum_{i=1}^{N} \\left[(x_i - \\bar{x})^2 \\hat{u}_i^2\\right]}{\\left(\\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}}

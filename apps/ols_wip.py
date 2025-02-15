@@ -1,21 +1,31 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+#     "scipy==1.15.1",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.9.7-dev1"
+__generated_with = "0.11.4"
 app = marimo.App()
 
 
 @app.cell
-def __():
+def _():
     import altair as alt
     return (alt,)
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
     import numpy as np
     import pandas as pd
-    import matplotlib.pyplot as plt
     from numpy.linalg import inv
     from scipy import stats
     import math
@@ -31,28 +41,27 @@ def __():
         np,
         ones,
         pd,
-        plt,
         stats,
         var,
     )
 
 
 @app.cell
-def __(alt):
+def _(alt):
     GRAPH_WIDTH = 600
     GRAPH_HEIGHT = 200
-    _ = alt.themes.enable('opaque')
+    _ = alt.theme.enable('opaque')
     return GRAPH_HEIGHT, GRAPH_WIDTH
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""# Ordinary Least Squares""")
     return
 
 
 @app.cell
-def __(column_stack, cov, inv, normal, np, ones, var):
+def _(column_stack, cov, inv, normal, np, ones, var):
     np.random.seed(11)
     N = 100
     y = normal(50_000, 10_000, N)
@@ -111,18 +120,18 @@ def __(column_stack, cov, inv, normal, np, ones, var):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     n = mo.ui.slider(0, 98, debounce=False, value=5)
     return (n,)
 
 
 @app.cell
-def __():
+def _():
     return
 
 
 @app.cell
-def __():
+def _():
     return
 
 

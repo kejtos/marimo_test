@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+#     "scipy==1.15.1",
+# ]
+# ///
 import marimo
 
 __generated_with = "0.9.7-dev1"
@@ -15,12 +25,11 @@ def __():
     import marimo as mo
     import numpy as np
     import pandas as pd
-    import matplotlib.pyplot as plt
     from scipy.stats import norm
     from numpy.linalg import inv
     from scipy import stats
     import math
-    return inv, math, mo, norm, np, pd, plt, stats
+    return inv, math, mo, norm, np, pd, stats
 
 
 @app.cell

@@ -29,7 +29,7 @@ def _(mo):
                     '#/about': f'{mo.icon('lucide:user')} About',
                     '#/contact': f'{mo.icon('lucide:phone')} Contact',
                     'Links': {
-                        '/marimo_test/apps/apps/heteroscedasticity.html': 'Heteroscedasticity',
+                        '/marimo_test/apps/heteroscedasticity.html': 'Heteroscedasticity',
                         '/marimo_test/apps/hypothesis_testing.html': 'Hypothesis testing',
                     },
                 },

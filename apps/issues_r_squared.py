@@ -1,7 +1,16 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+# ]
+# ///
 import marimo
 
 __generated_with = "0.9.10-dev11"
-app = marimo.App(width="medium", layout_file="layouts/notebook.grid.json")
+app = marimo.App(width="medium", layout_file="layouts/issues_r_squared.grid.json")
 
 
 @app.cell
@@ -327,11 +336,11 @@ def __(N, R_squared1, R_squared2, inv, mean, mo, np, ones, sum, x2, y1):
     models = mo.md(
         f"""
 
-    | Model                                                    | R-squared        |
-    |----------------------------------------------------------|------------------|
-    | \( Y = \\beta_0 + \\beta_1 X_1 + u \)                    | {R_squared1:.4f} |
-    | \( Y = \\beta_0 + \\beta_1 X_2 + \\beta_2 t + u \)       | {R_squared2:.4f} |
-    | \( Y = \\beta_0 + \\beta_1 X_2 + u \)                    | {R_squared3:.4f} |
+    | Model                                                      | R-squared        |
+    |------------------------------------------------------------|------------------|
+    | \\( Y = \\beta_0 + \\beta_1 X_1 + u \\)                    | {R_squared1:.4f} |
+    | \\( Y = \\beta_0 + \\beta_1 X_2 + \\beta_2 t + u \\)       | {R_squared2:.4f} |
+    | \\( Y = \\beta_0 + \\beta_1 X_2 + u \\)                    | {R_squared3:.4f} |
     """
     )
     return R_squared3, models
@@ -357,9 +366,9 @@ def __(N, inv, mean, mo, np, ones, randint, space, sum):
     model_cons_md = mo.md(
         f"""
 
-    {space*3} Economics: {space*10} \( I = C + S \)
+    {space*3} Economics: {space*10} \\( I = C + S \\)
 
-    Econometrics: {space*9} \( I_i = \\beta_0 + \\beta_1 C_i + \\beta_2 S_i + u_i \)
+    Econometrics: {space*9} \\( I_i = \\beta_0 + \\beta_1 C_i + \\beta_2 S_i + u_i \\)
 
     {space*4} R-squared: {space*10} {_R_squared:.4f}
     """
@@ -370,12 +379,12 @@ def __(N, inv, mean, mo, np, ones, randint, space, sum):
 @app.cell
 def __(mo):
     trend_md = mo.md(
-        """
-    \( Y \) is randomly generated trending variable
+    """
+    \\( Y \\) is randomly generated trending variable
 
-    \( X_1 \) is randomly generated trending variable
+    \\( X_1 \\) is randomly generated trending variable
 
-    \( X_2 \) is randomly generated non-trending variable
+    \\( X_2 \\) is randomly generated non-trending variable
 
     <br>
 

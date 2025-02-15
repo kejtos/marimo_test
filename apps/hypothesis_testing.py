@@ -1,7 +1,21 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+#     "scipy==1.15.1",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.10.12"
-app = marimo.App(width="medium", layout_file="layouts/notebook.grid.json")
+__generated_with = "0.11.4"
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/hypothesis_testing.grid.json",
+)
 
 
 @app.cell
@@ -288,9 +302,9 @@ def _(mo):
 def _(mo, test_stat):
     md_stat_t = mo.md(
         f"""
-    \[
+    \\[
     \\text{{t-stat}} = \\frac{{ \\hat{{ \\beta }} }}{{ SE( \\hat{{ \\beta }} ) }} = {test_stat:.2f}
-    \]
+    \\]
     """
     )
     return (md_stat_t,)
@@ -306,9 +320,9 @@ def _(md_stat_t):
 def _(dof, mo):
     md_dof_t = mo.md(
         f"""
-    \[
+    \\[
     \\text{{Degrees of freedom}} = N - k - 1 = {dof:.0f}
-    \]
+    \\]
     """
     )
     return (md_dof_t,)
@@ -322,7 +336,7 @@ def _(md_dof):
 
 @app.cell
 def _(alpha, mo):
-    md_alpha = mo.md(f"""\[ \\alpha = {alpha:.2f} \]""")
+    md_alpha = mo.md(f"""\\[ \\alpha = {alpha:.2f} \\]""")
     return (md_alpha,)
 
 
@@ -346,17 +360,17 @@ def _(md_alpha, md_stat, mo):
 def _(mo, p_val):
     p_val_2s_t_eq = mo.md(
         f"""
-    \[
+    \\[
     \\text{{p-value}} = 2(1 - \\text{{CDF}}(\\text{{t-stat}}_{{\\text{{df}}}})) = {p_val:.4f} 
-    \]
+    \\]
     """
     )
 
     p_val_1s_t_eq = mo.md(
         f"""
-    \[
+    \\[
     \\text{{p-value}} = 1 - \\text{{CDF}}(\\text{{t-stat}}_{{\\text{{df}}}}) = {p_val:.4f} 
-    \]
+    \\]
     """
     )
     return p_val_1s_t_eq, p_val_2s_t_eq
@@ -365,7 +379,7 @@ def _(mo, p_val):
 @app.cell
 def _(mo):
     md_regression = mo.md(
-        """\[y = \\beta_0 + \\beta_1 x_1 + \dots + \\beta_n x_n + u\]"""
+        """\\[y = \\beta_0 + \\beta_1 x_1 + \\dots + \\beta_n x_n + u\\]"""
     )
     return (md_regression,)
 
