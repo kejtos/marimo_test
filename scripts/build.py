@@ -111,8 +111,8 @@ def main() -> None:
 
 
     # Generate index only if all exports succeeded
-    # export_html_wasm('index.py', args.output_dir, as_app=True)
-    generate_index(all_notebooks, args.output_dir)
+    export_html_wasm('index.py', args.output_dir, as_app=True)
+    # generate_index(all_notebooks, args.output_dir)
 
 
 if __name__ == "__main__":
