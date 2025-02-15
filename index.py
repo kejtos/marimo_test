@@ -29,8 +29,8 @@ def _(mo):
                     '#/about': f'{mo.icon('lucide:user')} About',
                     '#/contact': f'{mo.icon('lucide:phone')} Contact',
                     'Links': {
-                        '/_site/apps/heteroscedasticity.html': 'Heteroscedasticity',
-                        '/_site/apps/hypothesis_testing.html': 'Hypothesis testing',
+                        '/marimo_test/apps/apps/heteroscedasticity.html': 'Heteroscedasticity',
+                        '/marimo_test/apps/hypothesis_testing.html': 'Hypothesis testing',
                     },
                 },
                 orientation='vertical',
