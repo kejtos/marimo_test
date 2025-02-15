@@ -28,7 +28,7 @@ def _():
     import marimo as mo
     import numpy as np
     import pandas as pd
-    from plot_beauty import beauty_altair, TEAL, GREEN
+    from helpers.plot_beauty import beauty_altair, TEAL, GREEN
     return GREEN, TEAL, beauty_altair, mo, np, pd
 
 

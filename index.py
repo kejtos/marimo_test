@@ -19,7 +19,7 @@ def _():
 
 
 @app.cell
-def _(mo):
+def menu(mo):
     mo.sidebar(
         [
             mo.md('# testos'),

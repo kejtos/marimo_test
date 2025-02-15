@@ -63,7 +63,7 @@ def _():
     import numpy as np
     import pandas as pd
     import altair as alt
-    from plot_beauty import beauty_altair
+    from helpers.plot_beauty import beauty_altair
     return alt, beauty_altair, mo, np, pd
 
 

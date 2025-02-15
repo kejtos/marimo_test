@@ -106,14 +106,13 @@ def main() -> None:
         return
 
     # Export notebooks sequentially
-    export_html_wasm('index.py', args.output_dir, as_app=True)
-
     for nb in all_notebooks:
         export_html_wasm(nb, args.output_dir, as_app=nb.startswith("apps/"))
 
 
     # Generate index only if all exports succeeded
-    # generate_index(all_notebooks, args.output_dir)
+    # export_html_wasm('index.py', args.output_dir, as_app=True)
+    generate_index(all_notebooks, args.output_dir)
 
 
 if __name__ == "__main__":

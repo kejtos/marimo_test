@@ -27,7 +27,7 @@ def __():
     from numpy import ones, exp, repeat, sum, mean
     from numpy.linalg import inv
     import pandas as pd
-    from plot_beauty import beauty_altair, ORANGE, TEAL, GREEN
+    from helpers.plot_beauty import beauty_altair, ORANGE, TEAL, GREEN
     return (
         GREEN,
         ORANGE,
