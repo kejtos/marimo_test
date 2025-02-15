@@ -26,7 +26,7 @@ def _():
 
 
 @app.cell
-def menu(mo):
+def _(mo):
     mo.md('All the apps should run in your browser. Some of them might take a few seconds, especially if you have got a slow PC.')
     return
 
