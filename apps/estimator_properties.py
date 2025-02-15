@@ -1,13 +1,29 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.10.12"
-app = marimo.App(layout_file="layouts/notebook.grid.json")
+__generated_with = "0.11.4"
+app = marimo.App(layout_file="layouts/estimator_properties.grid.json")
 
 
 @app.cell
 def _():
     # dodelat consistency. pridat ty unbiased tak, aby byl vzdycky vygenerovanej ten nejvic a dynamicky se to menilo
     # dodelat to sampl,e tlacitko
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""# Estimator properties""")
     return
 
 
@@ -77,8 +93,6 @@ def _(np):
         174,
     ]
 
-    # heights = [180, 185, 183, 184, 197, 173, 168, 159, 183]
-
     population_heights = np.array(heights)
     population_mean = population_heights.mean()
     return heights, population_heights, population_mean
@@ -100,7 +114,7 @@ def _(mo, sample_sizes_full):
         start=50,
         stop=1440,
         step=10,
-        value=400,
+        value=350,
         label="Height",
         show_value=True,
         full_width=True,

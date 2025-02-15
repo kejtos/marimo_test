@@ -1,10 +1,20 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "numpy==2.2.3",
+#     "pandas==2.2.3",
+#     "scipy==1.15.1",
+#     "statsmodels==0.14.4",
+# ]
+# ///
 import marimo
 
 __generated_with = "0.9.10-dev11"
 app = marimo.App(
     width="medium",
     app_title="Heteroscedasticity",
-    css_file="custom.css",
 )
 
 
@@ -69,8 +79,8 @@ def __(mo):
 
         We will use a simple dataset with 2 variables, so 1 dependent variable and 1 regressor:
 
-        - \( y \) = household monthly food expenditures
-        - \( x \) = household monthly income
+        - \\( y \\) = household monthly food expenditures
+        - \\( x \\) = household monthly income
 
         This dataset is available in the statsmodels package. Let's load it and look at the data.
         """
@@ -100,9 +110,9 @@ def __(mo):
 
         Now, we can estimate a simple linear regression model
 
-        \[
+        \\[
         \\text{{Food expeditures}} = \\beta_0 + \\beta_1 \\times \\text{{Income}} + u
-        \]
+        \\]
 
         In python, we can use statsmodels to estimate the coefficients.
         """
@@ -145,7 +155,7 @@ def __(mo):
         """
         <div style="height: 0.5em;"></div>
 
-        We can look at the output below of the model. While it is possible to begin by interpreting the F-test and R\( ^2 \), it is wise to first check for heteroscedasticity. If heteroscedasticity is present, we may need to re-estimate the model.
+        We can look at the output below of the model. While it is possible to begin by interpreting the F-test and R\\( ^2 \\), it is wise to first check for heteroscedasticity. If heteroscedasticity is present, we may need to re-estimate the model.
 
         <div style="height: 0.5em;"></div>
         """
@@ -183,9 +193,9 @@ def __(mo):
 
         When heteroskedasticity of the error term is present, then:
 
-        1. \( \\hat{\\beta}_{ols} \) no longer have the smallest variance \(\\rightarrow\) \( \\hat{\\beta}_{ols} \) is **inefficient** \(\\rightarrow\) \( \\hat{\\beta}_{ols} \) is no longer BLUE as it is **no longer the best** linear unbiased estimator \(\\rightarrow\) there exists another linear unbiased estimator with smaller variance.
+        1. \\( \\hat{\\beta}_{ols} \\) no longer have the smallest variance \\(\\rightarrow\\) \\( \\hat{\\beta}_{ols} \\) is **inefficient** \\(\\rightarrow\\) \\( \\hat{\\beta}_{ols} \\) is no longer BLUE as it is **no longer the best** linear unbiased estimator \\(\\rightarrow\\) there exists another linear unbiased estimator with smaller variance.
 
-        2. Standard errors calculated by the standard formula \( SE(\\hat{\\beta}) = \sqrt{\hat{\sigma}^2 \cdot (X'X)^{-1}} \) are biased and inconsistent. Therefore, everything that uses standard errors may be invalid, such as t-test, F-test, or confidence intervals.
+        2. Standard errors calculated by the standard formula \\( SE(\\hat{\\beta}) = \\sqrt{\\hat{\\sigma}^2 \\cdot (X'X)^{-1}} \\) are biased and inconsistent. Therefore, everything that uses standard errors may be invalid, such as t-test, F-test, or confidence intervals.
 
         Most real-world data will probably be heteroskedastic. (1.) is usually not a problem for large samples, and OLS is good enough, but (2.) needs to be dealt with even for large samples.
         """
@@ -213,7 +223,7 @@ def __(mo):
 @app.cell(hide_code=True)
 def __(mo):
     mo.md(
-        """One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\( \\hat{y} \)). If there is an evident pattern in the plot, then residuals are heteroskedastic."""
+        """One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\\( \\hat{y} \\)). If there is an evident pattern in the plot, then residuals are heteroskedastic."""
     ).style({"text-align": "justify"})
     return
 
@@ -232,7 +242,7 @@ def __(alt, fitted_values, food, mo, resid):
         stroke=alt.value("black"),
         strokeWidth=alt.value(1),
     ).properties(
-        width=1000, height=400, title="Residuals vs. Fitted values"
+        width=950, height=400, title="Residuals vs. Fitted values"
     ) + alt.Chart(
         food
     ).mark_rule(
@@ -244,7 +254,8 @@ def __(alt, fitted_values, food, mo, resid):
     final_chart = mo.ui.altair_chart(
         chart.configure_axis(
             titleFontSize=12, labelFontSize=10, grid=False
-        ).configure_title(fontSize=16)
+        ).configure_title(fontSize=16),
+        chart_selection=False
     )
     return chart, final_chart, food_plot
 
@@ -253,7 +264,7 @@ def __(alt, fitted_values, food, mo, resid):
 def __(final_chart, mo):
     mo.md(
         f"""
-    One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\( \\hat{{y}} \)). If there is an evident pattern in the plot, then residuals are heteroskedastic.
+    One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\\( \\hat{{y}} \\)). If there is an evident pattern in the plot, then residuals are heteroskedastic.
 
     {mo.as_html(final_chart)}
 
@@ -273,51 +284,51 @@ def __(mo):
 def __(mo):
     mo.md(
         """
-        A more formal (and safer) way of detecting heteroskedasticity is by using statistical tests. Breusch-Pagan test is one such test. It involves using a variance function and using a \( \\chi^2 \)-test to test the null hypothesis that the residuals (and therefore the error term) are homoscedastic. 
+        A more formal (and safer) way of detecting heteroskedasticity is by using statistical tests. Breusch-Pagan test is one such test. It involves using a variance function and using a \\( \\chi^2 \\)-test to test the null hypothesis that the residuals (and therefore the error term) are homoscedastic. 
 
-        To start, we need a variance function, a function that relates the variance to a set of explanatory variables \( z_{1}, z_{2}, \\ldots, z_{s} \) that are potentially different from \( x_{1}, x_{2}, \\ldots, x_{s} \). For example, income might explain the average consumption (mean), but education level, location, or age might explain the variability (variance) in consumption for different income levels. However, usually, all the regressors \( \\boldsymbol{x} \) are used at the place of \( \\boldsymbol{z} \). Nevertheless, a more general form of the variance function is 
+        To start, we need a variance function, a function that relates the variance to a set of explanatory variables \\( z_{1}, z_{2}, \\ldots, z_{s} \\) that are potentially different from \\( x_{1}, x_{2}, \\ldots, x_{s} \\). For example, income might explain the average consumption (mean), but education level, location, or age might explain the variability (variance) in consumption for different income levels. However, usually, all the regressors \\( \\boldsymbol{x} \\) are used at the place of \\( \\boldsymbol{z} \\). Nevertheless, a more general form of the variance function is 
 
-        \[ 
-        \\text{var}(y_i|\\boldsymbol{z_i}) = E(u_i^2|\\boldsymbol{z_i})= h(\\alpha_0 + \\alpha_1 z_{i1} + \\alpha_2 z_{i2} + \\ldots + \\alpha_s z_{is}) 
-        \] 
+        \\[
+        \\text{var}(y_i|\\boldsymbol{z_i}) = E(u_i^2|\\boldsymbol{z_i})= h(\\alpha_0 + \\alpha_1 z_{i1} + \\alpha_2 z_{i2} + \\ldots + \\alpha_s z_{is})
+        \\]
 
-        Notice in the above equation that the variance of \( y_i \) changes for each observation depending on the values of \( \\boldsymbol{z_i} \). If \( \\alpha_1 = \\alpha_2 = \\ldots = \\alpha_s = 0 \), then the variance is constant, and thus the error term is homoscedastic. Recall that we are testing the following null and alternative hypotheses: 
+        Notice in the above equation that the variance of \\( y_i \\) changes for each observation depending on the values of \\( \\boldsymbol{z_i} \\). If \\( \\alpha_1 = \\alpha_2 = \\ldots = \\alpha_s = 0 \\), then the variance is constant, and thus the error term is homoscedastic. Recall that we are testing the following null and alternative hypotheses: 
 
         \\[
         H_0: \\alpha_1 = \\alpha_2 = \\ldots = \\alpha_s = 0 \\\\
         H_1: \\text{At least one of the } \\alpha_1, \\alpha_2, \\ldots, \\alpha_s \\text{ is not zero}
-        \]
+        \\]
 
-        To obtain a test statistic for our hypothesis test, we consider the linear variance function \( h(\\alpha_0 + \\alpha_1 z_{2} + \\ldots + \\alpha_s z_{s}) \). Let's drop the index i and use vectors for clarity. We would like to estimate the following model 
+        To obtain a test statistic for our hypothesis test, we consider the linear variance function \\( h(\\alpha_0 + \\alpha_1 z_{2} + \\ldots + \\alpha_s z_{s}) \\). Let's drop the index i and use vectors for clarity. We would like to estimate the following model 
 
-        \[ 
+        \\[
         u^2 = \\alpha_0 + \\alpha_1 z_{1} + \\ldots + \\alpha_s z_{s} + v
-        \] 
+        \\]
 
-        However, since the error term \( u^2 \) is unobservable, we have to use their estimates, that is residuals \( \\hat{u}^2 \). We then get
+        However, since the error term \\( u^2 \\) is unobservable, we have to use their estimates, that is residuals \\( \\hat{u}^2 \\). We then get
 
-        \[
+        \\[
         \\hat{u}^2 = \\alpha_0 + \\alpha_1 z_{1} + \\ldots + \\alpha_s z_{s} + v
-        \]
+        \\]
 
-        We are interested in figuring out whether the variables \( z_{1}, z_{2}, \\ldots, z_{s} \\) help explain the variation in the residual \( \\hat{u}^2 \), and since \( R^2 \) measures the proportion of variance in \( \\hat{u}_i^2 \) explained by the \( \\boldsymbol{z} \\), it is a natural candidate for a test statistic. When \( H_0 \) is true, the sample size \( N \) multiplied by \( R^2 \\) has a \( \\chi^2 \) distribution with \( k-1 \) ( # of estimated coefficients \( - \) 1) degrees of freedom. Since we have only 1 regressor and a constant, the test statistic is then
+        We are interested in figuring out whether the variables \\( z_{1}, z_{2}, \\ldots, z_{s} \\) help explain the variation in the residual \\( \\hat{u}^2 \\), and since \\( R^2 \\) measures the proportion of variance in \\( \\hat{u}_i^2 \\) explained by the \\( \\boldsymbol{z} \\), it is a natural candidate for a test statistic. When \\( H_0 \\) is true, the sample size \\( N \\) multiplied by \\( R^2 \\) has a \\( \\chi^2 \\) distribution with \\( k-1 \\) ( # of estimated coefficients \\( - \\) 1) degrees of freedom. Since we have only 1 regressor and a constant, the test statistic is then
 
-        \[
+        \\[
         \\chi^2 = N \\times R^2 \\sim \\chi^2_{1}
-        \]
+        \\]
 
         which then gets used to test the following hypothesis
 
-        \[
+        \\[
         H_0: \\alpha_1 = 0 \\\\
         H_1: \\alpha_1 \\neq 0
-        \]
+        \\]
 
         The test effectively compares two models:
 
         \\begin{align*}
         u^2 &= \\alpha_0 + \\alpha_1 z_{1} + \\ldots + \\alpha_s z_{s} + v \\\\
-        u^2 &= \\alpha_0 + \\alpha_1 z_{1} + \\ldots + \\alpha_s z_{s} + v \\quad 
+        u^2 &= \\alpha_0 + v
         \\end{align*}
 
         We will conduct the Breusch-Pagan test 'by hand' first, and with the help of statsmodels second.
@@ -386,18 +397,18 @@ def __(N, alpha, mo, r_sq_bp):
 
     Looking at the output, we have got
 
-    \[
+    \\[
     R_{{BP}}^2 = {r_sq_bp:.2f} \\\\
     N_{{BP}} = {N}
-    \]
+    \\]
 
     Therefore
 
-    \[
+    \\[
     \\chi_{{BP}}^2 = {N} \\times {r_sq_bp:.2f} = {N*r_sq_bp:.2f}
-    \]
+    \\]
 
-    Let’s get the critical value at {1-alpha} for \( \\chi^2\) with 1 degree of freedom and the p-value.
+    Let’s get the critical value at {1-alpha} for \\( \\chi^2\\) with 1 degree of freedom and the p-value.
     """
     )
     return
@@ -416,9 +427,9 @@ def __(N, chi2, mo, r_sq_bp):
 @app.cell(hide_code=True)
 def __(chi2_stat, critical_value, p_val_bp):
     if chi2_stat > critical_value:
-        reject_hand = f"Since the p-value = {p_val_bp:.4f} < \( \\alpha \\) = 0.05, or alternatively, since the observed statistic = {chi2_stat:.4f} > critical value = {critical_value:.4f}, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
+        reject_hand = f"Since the p-value = {p_val_bp:.4f} < \\( \\alpha \\) = 0.05, or alternatively, since the observed statistic = {chi2_stat:.4f} > critical value = {critical_value:.4f}, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
     else:
-        reject_hand = f"Since the p-value = {p_val_bp:.4f} > \( \\alpha \\) = 0.05, or alternatively, since the observed statistic = {chi2_stat:.4f} < critical value = {critical_value:.4f}, we **fail to reject** the null hypothesis and conclude that the error term is homoskedastic."
+        reject_hand = f"Since the p-value = {p_val_bp:.4f} > \\( \\alpha \\) = 0.05, or alternatively, since the observed statistic = {chi2_stat:.4f} < critical value = {critical_value:.4f}, we **fail to reject** the null hypothesis and conclude that the error term is homoskedastic."
     return (reject_hand,)
 
 
@@ -428,9 +439,9 @@ def __(chi2_stat, critical_value, mo, p_val_bp):
         f"""
     | **Metric**                                     | **Value**            |
     |------------------------------------------------|----------------------|
-    | **Test Statistic (\( \\chi^2\))**             | {chi2_stat:.4f}      |
-    | **Critical Value (\( \\chi^2\), 95%, df=1)** | {critical_value:.4f} |
-    | **P-value (P( \( \\chi^2\) > Test Statistic \| df=1))**| {p_val_bp:.4f} |
+    | **Test Statistic (\\( \\chi^2\\))**             | {chi2_stat:.4f}      |
+    | **Critical Value (\\( \\chi^2\\), 95%, df=1)** | {critical_value:.4f} |
+    | **P-value (P( \\( \\chi^2\\) > Test Statistic \\| df=1))**| {p_val_bp:.4f} |
     """
     ).center()
     return
@@ -474,9 +485,9 @@ def __(X, het_breuschpagan, mo, model_ols):
 @app.cell(hide_code=True)
 def __(alpha, lm_pval, p_val_bp):
     if lm_pval < alpha:
-        reject_test = f"Since the p-value = {p_val_bp:.4f} < \( \\alpha \\) = 0.05, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
+        reject_test = f"Since the p-value = {p_val_bp:.4f} < \\( \\alpha \\) = 0.05, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
     else:
-        reject_test = f"Since the p-value = {p_val_bp:.4f} is > \( \\alpha \\) = 0.05, we **fail to reject** the null hypothesis and conclude that the error term is homoskedastic."
+        reject_test = f"Since the p-value = {p_val_bp:.4f} is > \\( \\alpha \\) = 0.05, we **fail to reject** the null hypothesis and conclude that the error term is homoskedastic."
     return (reject_test,)
 
 
@@ -490,7 +501,7 @@ def __(lm_pval, lm_stat, mo, reject_test):
         f"""
     | **Metric**                     | **Value**      |
     |--------------------------------|----------------|
-    | **LM Statistic (\(\chi^2\))** | {lm_stat:.4f}  |
+    | **LM Statistic (\\(\\chi^2\\))** | {lm_stat:.4f}  |
     | **LM-Test p-value**           | {lm_pval:.4f}  |
     """
     ).center()
@@ -542,41 +553,41 @@ def __(mo):
 
         The standard errors of the OLS estimator in a simple linear regression model is given by:
 
-        \[
-        \\text{SE}(\hat{\\beta}) = \sqrt{\\text{diag}\left( (X'X)^{-1} X' \Omega X (X'X)^{-1} \\right)} = \sqrt{\\text{diag}\left( (X'X)^{-1} X' \sigma^2I X (X'X)^{-1} \\right)} = \sqrt{\\text{diag}\left( \sigma^2 (X'X)^{-1} \\right)}
-        \]
+        \\[
+        \\text{SE}(\\hat{\\beta}) = \\sqrt{\\text{diag}\\left( (X'X)^{-1} X' \\Omega X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( (X'X)^{-1} X' \\sigma^2 I X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( \\sigma^2 (X'X)^{-1} \\right)}
+        \\]
 
-        White's robust standard errors get adjusted for heteroskedasticity by replacing $\sigma_i^2$ with the squared OLS residuals $\hat{u}_i^2$ and includes a degrees of freedom adjustment:
+        White's robust standard errors get adjusted for heteroskedasticity by replacing $\\sigma_i^2$ with the squared OLS residuals $\\hat{u}_i^2$ and includes a degrees of freedom adjustment:
 
-        \[
-        \\text{SE}(\\hat{\\beta})^{\\text{Robust}} = \sqrt{\\text{diag}\left( \\frac{N}{N - K} \cdot (X'X)^{-1} X' \Omega X (X'X)^{-1} \\right)} = \sqrt{\\text{diag}\left( \\frac{N}{N - K} \cdot (X'X)^{-1} \left( \sum_{i=1}^{N} \\hat{u}_i^2 \cdot X_i X_i' \\right) (X'X)^{-1} \\right)}
-        \]
+        \\[
+        \\text{SE}(\\hat{\\beta})^{\\text{Robust}} = \\sqrt{\\text{diag}\\left( \\frac{N}{N - K} \\cdot (X'X)^{-1} X' \\Omega X (X'X)^{-1} \\right)} = \\sqrt{\\text{diag}\\left( \\frac{N}{N - K} \\cdot (X'X)^{-1} \\left( \\sum_{i=1}^{N} \\hat{u}_i^2 \\cdot X_i X_i' \\right) (X'X)^{-1} \\right)}
+        \\]
 
         #### b) Algebraic version
 
         The standard error of the OLS estimator $\\beta_1$ in a simple linear regression model is given by:
 
-        \[
-        \\text{SE}(\\hat{\\beta}_1) = \sqrt{\\text{Var}(\\hat{\\beta}_1)} = \sqrt{\\frac{\sum_{i=1}^{N} (x_i - \\bar{x})^2 \sigma^2}{\left(\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}} = \sqrt{\\frac{\sigma^2}{\sum_{i=1}^{N} (x_i - \\bar{x})^2}}
-        \]
+        \\[
+        \\text{SE}(\\hat{\\beta}_1) = \\sqrt{\\text{Var}(\\hat{\\beta}_1)} = \\sqrt{\\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2 \\sigma^2}{\\left(\\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}} = \\sqrt{\\frac{\\sigma^2}{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}}
+        \\]
 
-        White's robust standard errors get adjusted for heteroskedasticity by replacing $\sigma_i^2$ with the squared OLS residuals $\hat{u}_i^2$ and includes a degrees of freedom adjustment:
+        White's robust standard errors get adjusted for heteroskedasticity by replacing $\\sigma_i^2$ with the squared OLS residuals $\\hat{u}_i^2$ and includes a degrees of freedom adjustment:
 
-        \[
-        \\text{SE}(\hat{\\beta}_1)^{\\text{robust}} = \sqrt{\\text{Var}(\hat{\\beta}_1)^{\\text{robust}}} = \sqrt{\\frac{N}{N - K} \cdot \\frac{\sum_{i=1}^{N} \left[(x_i - \\bar{x})^2 \hat{u}_i^2\\right]}{\left(\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}}
-        \]
+        \\[
+        \\text{SE}(\\hat{\\beta}_1)^{\\text{robust}} = \\sqrt{\\text{Var}(\\hat{\\beta}_1)^{\\text{robust}}} = \\sqrt{\\frac{N}{N - K} \\cdot \\frac{\\sum_{i=1}^{N} \\left[(x_i - \\bar{x})^2 \\hat{u}_i^2\\right]}{\\left(\\sum_{i=1}^{N} (x_i - \\bar{x})^2\\right)^2}}
+        \\]
 
         #### c) Other estimators
-        Few examples of heteroscedasticity-consistent estimators of \( \\text{Var}(\hat{\\beta})^{\\text{robust}} \):
+        Few examples of heteroscedasticity-consistent estimators of \\( \\text{Var}(\\hat{\\beta})^{\\text{robust}} \\):
 
         \\begin{align*}
-        \\text{HC0}&: \quad \\text{Var}(\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}(u_i^2) X (X'X)^{-1} \\\\
-        \\text{HC1}&: \quad \\text{Var}(\hat{\\beta})^{\\text{robust}} = \\frac{N}{N - K} \cdot (X'X)^{-1} X' \\text{diag}(u_i^2) X (X'X)^{-1} \\\\
-        \\text{HC2}&: \quad \\text{Var}(\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}\left( \\frac{u_i^2}{1 - h_i} \\right) X (X'X)^{-1} \\\\
-        \\text{HC3}&: \quad \\text{Var}(\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}\left( \\frac{u_i^2}{(1 - h_i)^2} \\right) X (X'X)^{-1} \\
-        \end{align*}
+        \\text{HC0}&: \\quad \\text{Var}(\\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}(u_i^2) X (X'X)^{-1} \\\\
+        \\text{HC1}&: \\quad \\text{Var}(\\hat{\\beta})^{\\text{robust}} = \\frac{N}{N - K} \\cdot (X'X)^{-1} X' \\text{diag}(u_i^2) X (X'X)^{-1} \\\\
+        \\text{HC2}&: \\quad \\text{Var}(\\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}\\left( \\frac{u_i^2}{1 - h_i} \\right) X (X'X)^{-1} \\\\
+        \\text{HC3}&: \\quad \\text{Var}(\\hat{\\beta})^{\\text{robust}} = (X'X)^{-1} X' \\text{diag}\\left( \\frac{u_i^2}{(1 - h_i)^2} \\right) X (X'X)^{-1} \\
+        \\end{align*}
 
-        where \(h_i \) is the leverage of the \( i \)-th observation, indicating its influence on the regression model, and can be calculated as \( h_i = \mathbf{x}_i (X'X)^{-1} \mathbf{x}_i' \).
+        where \\(h_i \\) is the leverage of the \\( i \\)-th observation, indicating its influence on the regression model, and can be calculated as \\( h_i = \\mathbf{x}_i (X'X)^{-1} \\mathbf{x}_i' \\).
 
         Let’s check the standard errors of our estimators for our original model.
 
@@ -638,13 +649,13 @@ def __(beta_ols, bse_ols, mo, std_err_rob, t_975):
         f"""
     <div style="height: 0.5em;"></div>
 
-    Notice that the standard errors changed (quite a lot). Our robust standard errors for \( \\beta_0 \\) and \( \\beta_0 \\) are {beta_ols['const']:.2f} and {beta_ols['income']:.2f}, respectively. Everything that is calculated from standard erros changed (e.g., t-ratio or p-values), everything that is not calculated from standard errors stayed the same (e.g., coefficients or R\( ^2 \)), since we still estimated the coefficients using OLS. 
+    Notice that the standard errors changed (quite a lot). Our robust standard errors for \\( \\beta_0 \\) and \\( \\beta_0 \\) are {beta_ols['const']:.2f} and {beta_ols['income']:.2f}, respectively. Everything that is calculated from standard erros changed (e.g., t-ratio or p-values), everything that is not calculated from standard errors stayed the same (e.g., coefficients or R\\( ^2 \\)), since we still estimated the coefficients using OLS. 
 
-    Using a confidence level of 0.95, notice the discrepancy in our confidence intervals for \( \\beta_1 \\): 
+    Using a confidence level of 0.95, notice the discrepancy in our confidence intervals for \\( \\beta_1 \\): 
 
-    **White:** \( \\beta_1 \\pm t_{{cse}}(\\beta_1) = {beta_ols['income']:.2f} \\pm {t_975:.2f} \\times {std_err_rob[1]:.2f} = [{beta_ols['income']-std_err_rob[1]*2.024:.2f}, {beta_ols['income']+std_err_rob[1]*2.024:.2f}] \\)
+    **White:** \\( \\beta_1 \\pm t_{{cse}}(\\beta_1) = {beta_ols['income']:.2f} \\pm {t_975:.2f} \\times {std_err_rob[1]:.2f} = [{beta_ols['income']-std_err_rob[1]*2.024:.2f}, {beta_ols['income']+std_err_rob[1]*2.024:.2f}] \\)
 
-    **OLS:** \( \\beta_1 \\pm t_{{cse}}(\\beta_1) = {beta_ols['income']:.2f} \\pm {t_975:.2f} \\times {bse_ols['income']:.2f} = [{beta_ols['income']-bse_ols['income']*2.024:.2f}, {beta_ols['income']+bse_ols['income']*2.024:.2f}] \\)
+    **OLS:** \\( \\beta_1 \\pm t_{{cse}}(\\beta_1) = {beta_ols['income']:.2f} \\pm {t_975:.2f} \\times {bse_ols['income']:.2f} = [{beta_ols['income']-bse_ols['income']*2.024:.2f}, {beta_ols['income']+bse_ols['income']*2.024:.2f}] \\)
 
     Regressing with robust standard errors addresses the issue of computing incorrect interval estimates or incorrect values for our test statistics. However, it doesn’t address the issue of the second consequence of heteroskedasticity, which is the least squares estimators no longer being best. However, this may not be too consequential. Again, if you have a sufficiently large enough sample size (which is generally the case in real-world applications), the variance of your estimators may still be small enough to get precise estimates.
     """
@@ -662,24 +673,24 @@ def __(mo):
 def __(mo):
     mo.md(
         """
-    When the error term is heteroscedastic, and the OLS estimator is therefore no longer BLUE, we can use a different estimator that depends on the variance \( \\sigma_i^2 \). This estimator is referred to as the **Generalized Least Squares (GLS)** estimator. Leaving the structure of the model intact, it is possible to turn the heteroskedastic model into a homoskedastic one. When we know the structure of the variance (rarely happens, close to never in social sciences), we can use use that structure and apply GLS.
+    When the error term is heteroscedastic, and the OLS estimator is therefore no longer BLUE, we can use a different estimator that depends on the variance \\( \\sigma_i^2 \\). This estimator is referred to as the **Generalized Least Squares (GLS)** estimator. Leaving the structure of the model intact, it is possible to turn the heteroskedastic model into a homoskedastic one. When we know the structure of the variance (rarely happens, close to never in social sciences), we can use use that structure and apply GLS.
 
     The main idea behind this procedure is to weight observations based on their variance. Observations with higher variance (with higher level of uncertainty) have lower weight than those with lower variance (with lower uncertainty). The most important step is the assumption of the type of variance structure.
 
-    When we know the variance structure and therefore know \( \\sigma_i^2 \), we can divide the model by \( \\sigma_i \) to get a model with homoscedastic error term:
+    When we know the variance structure and therefore know \\( \\sigma_i^2 \\), we can divide the model by \\( \\sigma_i \\) to get a model with homoscedastic error term:
 
     \\begin{align*}
     \\frac{y_i}{\\sigma_i} &= \\frac{\\beta_0}{\\sigma_i} + \\beta_1 \\frac{x_i}{\\sigma_i} + \\frac{u_i}{\\sigma_i} \\\\
     y_i^* &= \\alpha_0 + \\alpha_1 x_{i}^* + u_i^*
     \\end{align*}
 
-    The error term \( u_i^* \) is homoscedastic since
+    The error term \\( u_i^* \\) is homoscedastic since
 
-    \[
+    \\[
     \\text{Var}\\left( \\frac{u_i}{\\sigma_i} \\right) = \\frac{\\text{Var}(u_i)}{\\sigma_i^2} = \\frac{\\sigma_i^2}{\\sigma_i^2} = 1
-    \]
+    \\]
 
-    As an example, let's assume that the variance structure can be expressed as \( \\sigma^2 x_i^2 \). We can then remove the heteroscedasticity:
+    As an example, let's assume that the variance structure can be expressed as \\( \\sigma^2 x_i^2 \\). We can then remove the heteroscedasticity:
 
     \\begin{align*}
     \\frac{y_i}{\\sigma_ix_i} &= \\frac{\\beta_0}{\\sigma_ix_i} + \\beta_1 \\frac{x_i}{\\sigma_ix_i} + \\frac{u_i}{\\sigma_ix_i} \\\\
@@ -693,7 +704,7 @@ def __(mo):
     y_i^* &= \\alpha_0 x_{i}^* + \\alpha_1 + u_i^*
     \\end{align*}
 
-    since \( \sigma^2 \) is a constant.
+    since \\( \\sigma^2 \\) is a constant.
         """
     ).style(text_align="justify")
     return
@@ -748,33 +759,33 @@ def __(mo):
 
         Let's try a general specification of the variance structure of the following form 
 
-        \[ 
-        \\text{var}(u_i) = \sigma_i^2 = \sigma^2 x_i^{\gamma}
-        \] 
+        \\[
+        \\text{var}(u_i) = \\sigma_i^2 = \\sigma^2 x_i^{\\gamma}
+        \\]
 
-        where \( \\gamma \) is an unknown parameter. Notice that the variance function depends on a constant term \( \\sigma^2 \) and increases as \( x_i \) increases. Let’s start by taking the natural logs of both sides of the above equations so that we get 
+        where \\( \\gamma \\) is an unknown parameter. Notice that the variance function depends on a constant term \\( \\sigma^2 \\) and increases as \\( x_i \\) increases. Let’s start by taking the natural logs of both sides of the above equations so that we get 
 
-        \[ 
-        \ln(\\sigma_i^2) = \\ln(\\sigma^2) + \\gamma \\ln(x_i) 
-        \] 
+        \\[
+        \\ln(\\sigma_i^2) = \\ln(\\sigma^2) + \\gamma \\ln(x_i) 
+        \\]
 
         Then, we can exponetiate both sides
 
-        \[ 
-        \sigma_i^2 = \\exp\\left[\\ln(\\sigma^2) + \\gamma \\ln(x_i)\\right] = \\exp(\\alpha_0 + \\alpha_1 z_i) 
-        \] 
+        \\[
+        \\sigma_i^2 = \\exp\\left[\\ln(\\sigma^2) + \\gamma \\ln(x_i)\\right] = \\exp(\\alpha_0 + \\alpha_1 z_i) 
+        \\]
 
-        where \( \\alpha_0 = \\ln(\\sigma^2) \), \( \\alpha_1 = \\gamma \), and \( z_i = \\ln(x_i) \). The exponential function is convenient because it ensures that we will get non-negative values for the variances \( \\sigma_i^2 \) for all possible values of the parameters \( \\alpha_0, \\alpha_1, \\ldots, \\alpha_s \). Returning to the equation \( \\sigma_i^2 = \\exp(\\alpha_0 + \\alpha_1 z_i) \), we can rewrite it as 
+        where \\( \\alpha_0 = \\ln(\\sigma^2) \\), \\( \\alpha_1 = \\gamma \\), and \\( z_i = \\ln(x_i) \\). The exponential function is convenient because it ensures that we will get non-negative values for the variances \\( \\sigma_i^2 \\) for all possible values of the parameters \\( \\alpha_0, \\alpha_1, \\ldots, \\alpha_s \\). Returning to the equation \\( \\sigma_i^2 = \\exp(\\alpha_0 + \\alpha_1 z_i) \\), we can rewrite it as 
 
-        \[ 
-        \ln(\\sigma_i^2) = \\alpha_0 + \\alpha_1 z_i
-        \] 
+        \\[
+        \\ln(\\sigma_i^2) = \\alpha_0 + \\alpha_1 z_i
+        \\]
 
-        We now have an equation in which we can estimate the unknown parameters \( \\alpha_0 \) and \( \\alpha_1 \). We can do this the same way we obtain estimates for the parameters \( \\beta_0 \\) and \( \\beta_1 \) in a simple regression model \( y_i = \\beta_0 + \\beta_1 x_i + u_i \) using ordinary least squares. We can do this by using the squares of our least squares residuals \( u_i^2 = y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i \) as our observations. That is, we can write the above equation as 
+        We now have an equation in which we can estimate the unknown parameters \\( \\alpha_0 \\) and \\( \\alpha_1 \\). We can do this the same way we obtain estimates for the parameters \\( \\beta_0 \\) and \\( \\beta_1 \\) in a simple regression model \\( y_i = \\beta_0 + \\beta_1 x_i + u_i \\) using ordinary least squares. We can do this by using the squares of our least squares residuals \\( u_i^2 = y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i \\) as our observations. That is, we can write the above equation as 
 
-        \[
-        \ln(\\hat{u}_i^2) = \\alpha_0 + \\alpha_1 z_i + v_i
-        \] 
+        \\[
+        \\ln(\\hat{u}_i^2) = \\alpha_0 + \\alpha_1 z_i + v_i
+        \\]
 
         We can now apply least squares to get our parameter estimates. Let’s use our food expenditure data that we’ve been working with so far.
 
@@ -821,10 +832,10 @@ def __(mo):
         The next step is to transform the observations in such a way that the transformed model has a constant error variance. To do so, we can obtain variance estimates from 
 
         \\[ 
-        \\hat{\\sigma}_i^2 = \\exp(\\alpha_0 + \\alpha_1 z_i) 
+        \\hat{\\sigma}_i^2 = \\exp(\\alpha_0 + \\alpha_1 z_i)
         \\] 
 
-        and then divide both sides of the regression model \( y_i = \\beta_0 + \\beta_1 x_i + u_i \\) by \( \\sigma_i \\). Doing so yields the following equation 
+        and then divide both sides of the regression model \\( y_i = \\beta_0 + \\beta_1 x_i + u_i \\) by \\( \\sigma_i \\). Doing so yields the following equation 
 
         \\[ 
         \\frac{y_i}{\\sigma_i} = \\beta_0 \\left( \\frac{1}{\\sigma_i} \\right) + \\beta_1 \\left( \\frac{x_i}{\\sigma_i} \\right) + \\frac{u_i}{\\sigma_i} 
@@ -836,14 +847,14 @@ def __(mo):
         \\text{Var}\\left( \\frac{u_i}{\\sigma_i} \\right) = \\frac{1}{\\sigma_i^2} \\text{Var}(u_i) = \\frac{1}{\\sigma_i^2} \\sigma_i^2 = 1 
         \\] 
 
-        Using the estimates of our variance function \( \\sigma_i^2 \\) in place of \( \\sigma_i^2 \\) to obtain the generalized least squares estimators of \( \\beta_0 \\) and \( \\beta_1 \\), we define the transformed variables and apply weighted least squares to the equation 
+        Using the estimates of our variance function \\( \\sigma_i^2 \\) in place of \\( \\sigma_i^2 \\) to obtain the generalized least squares estimators of \\( \\beta_0 \\) and \\( \\beta_1 \\), we define the transformed variables and apply weighted least squares to the equation 
 
         \\begin{align*}
         \\frac{Y_i}{\\sigma_i} &= \\frac{\\beta_0}{\\sigma_i} + \\beta_1 \\frac{X_{i1}}{\\sigma_i} + \\frac{u_i}{\\sigma_i} \\\\
         Y_i^* &= \\alpha_0 + \\alpha_1 X_{i1}^* + u_i^*
         \\end{align*}
 
-        While we used weights to mean \( \sqrt{\\frac{1}{\\text{Var Structure}}} \), a lot of packages and sofware (Gretl and Statsmodels included) use weights to mean \( \\frac{1}{\\text{Var Structure}} \), therefore, one have to supply the latter version, if the procedure asks for weigths. Here’s how we can do it using Python.
+        While we used weights to mean \\( \\sqrt{\\frac{1}{\\text{Var Structure}}} \\), a lot of packages and sofware (Gretl and Statsmodels included) use weights to mean \\( \\frac{1}{\\text{Var Structure}} \\), therefore, one have to supply the latter version, if the procedure asks for weigths. Here’s how we can do it using Python.
 
         <div style="height: 0.5em;"></div>
         """
@@ -904,7 +915,7 @@ def __(mo):
         """
         <div style="height: 0.5em;"></div>
 
-        And below is the comparison of standard errors and R(\^2\) of the two models:
+        And below is the comparison of standard errors and R(\\^2\\) of the two models:
         """
     )
     return
@@ -916,8 +927,8 @@ def __(bse_gls, bse_ols, mo, r2_gls, r2_ols):
         f"""
     Metric         | OLS                     | WLS                     |
     -------------- | ----------------------- | ----------------------- |
-    \( R^2 \)      | {r2_ols:.4f}            | {r2_gls:.4f}            |
-    \( SE(\\hat{{\\beta}}) \) | {bse_ols['income']:.4f} | {bse_gls['income']:.4f} |
+    \\( R^2 \\)      | {r2_ols:.4f}            | {r2_gls:.4f}            |
+    \\( SE(\\hat{{\\beta}}) \\) | {bse_ols['income']:.4f} | {bse_gls['income']:.4f} |
     """
     ).center()
     return
@@ -968,7 +979,8 @@ def __(alt, beta_gls, beta_ols, food, mo, pd):
         (scatter + line_plot)
         .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
         .configure_title(fontSize=16)
-        .properties(title="OLS vs. GLS", width=1000, height=400)
+        .properties(title="OLS vs. GLS", width=950, height=400),
+        chart_selection=False
     )
     return final_chart_2, line_data, line_plot, scatter
 
@@ -981,7 +993,7 @@ def __(final_chart_2, mo):
 
     {mo.as_html(final_chart_2)}
 
-        The green line represents the fitted GLS regression line, and the orange dashed line represents the fitted OLS regression line. Based on the comparisons of the models, the GLS model fits slightly better, as it has a higher \( R^2 \). Since observations with higher variance are weighted less, the two observations [2551.66, 863.92] and [4957.81, 1827.20] are not able to pull the line down unlike with regular OLS.
+        The green line represents the fitted GLS regression line, and the orange dashed line represents the fitted OLS regression line. Based on the comparisons of the models, the GLS model fits slightly better, as it has a higher \\( R^2 \\). Since observations with higher variance are weighted less, the two observations [2551.66, 863.92] and [4957.81, 1827.20] are not able to pull the line down unlike with regular OLS.
     """
     )
     return

@@ -1,22 +1,32 @@
+# /// script
+# requires-python = '>=3.13'
+# dependencies = [
+#     "marimo",
+#     "altair==5.5.0",
+#     "pandas==2.2.3",
+#     "numpy==2.2.3",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.9.10-dev11"
-app = marimo.App(width="medium", layout_file="layouts/notebook.grid.json")
+__generated_with = "0.11.4"
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/adding_observations.grid.json",
+)
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
     import altair as alt
     import pandas as pd
-    import matplotlib.pyplot as plt
-    from scipy.stats import norm
-    from scipy import stats
-    return alt, mo, norm, pd, plt, stats
+    return alt, mo, pd
 
 
 @app.cell
-def __(mo):
+def _(mo):
     import numpy as np
     from numpy.linalg import inv
 
@@ -25,25 +35,19 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(r"""# Least square regression""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
-    mo.md(
-        """
-        \[
-        \\hat{\\beta}_{ols} = (X^TX)^{-1}X^Ty
-        \]
-        """
-    )
+def _(mo):
+    mo.md("""$$ \\hat{\\beta}_{ols} = (X^TX)^{-1}X^Ty $$""")
     return
 
 
 @app.cell
-def __(np):
+def _(np):
     np.random.seed(11)
     N = 1_000
     x_min, x_max = 140, 210
@@ -51,7 +55,7 @@ def __(np):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     N_slider = mo.ui.slider(
         start=3,
         stop=1_000,
@@ -66,7 +70,7 @@ def __(mo):
         start=100,
         stop=2560,
         step=10,
-        value=1040,
+        value=940,
         label="Width",
         debounce=True,
         show_value=True,
@@ -87,7 +91,7 @@ def __(mo):
 
 
 @app.cell
-def __(N, np):
+def _(N, np):
     height = np.floor(np.random.normal(loc=180, scale=10, size=N))
     weight = height // 3 + np.random.randint(low=0, high=50, size=N)
     const = np.ones(N)
@@ -95,7 +99,7 @@ def __(N, np):
 
 
 @app.cell
-def __(N_slider, const, height, np, pd, weight):
+def _(N_slider, const, height, np, pd, weight):
     x = height[: N_slider.value]
     y = weight[: N_slider.value]
     c = const[: N_slider.value]
@@ -107,7 +111,7 @@ def __(N_slider, const, height, np, pd, weight):
 
 
 @app.cell
-def __(X, inv, mo, y):
+def _(X, inv, mo, y):
     intercept, slope = inv(X.T @ X) @ X.T @ y
 
     mo.show_code()
@@ -115,7 +119,7 @@ def __(X, inv, mo, y):
 
 
 @app.cell
-def __(
+def _(
     alt,
     df,
     intercept,
@@ -167,12 +171,12 @@ def __(
         .properties(width=slider_width.value, height=slider_height.value)
     )
 
-    final_altair_chart = mo.ui.altair_chart(final_chart)
+    final_altair_chart = mo.ui.altair_chart(final_chart, chart_selection=False)
     return abline, abline_data, chart, final_altair_chart, final_chart
 
 
 @app.cell
-def __(df, mo):
+def _(df, mo):
     weight_height_table = mo.ui.table(
         data=df,
         pagination=True,
@@ -184,62 +188,57 @@ def __(df, mo):
 
 
 @app.cell
-def __(weight_height_table):
+def _(weight_height_table):
     weight_height_table
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""# Adding observations""")
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""Number of observations""")
     return
 
 
 @app.cell(hide_code=True)
-def __(N_slider):
+def _(N_slider):
     N_slider
     return
 
 
 @app.cell(hide_code=True)
-def __(slider_width):
+def _(slider_width):
     slider_width
     return
 
 
 @app.cell(hide_code=True)
-def __(slider_height):
+def _(slider_height):
     slider_height
     return
 
 
 @app.cell(hide_code=True)
-def __(intercept, mo, slope):
-    if slope >= 0:
-        equation_ols = mo.md(
-            f"""\[ \\widehat{{\\text{{Weight}}}} = {intercept:.2f} + {slope:.2f} \\text{{Height}} \]"""
-        )
-    else:
-        equation_ols = mo.md(
-            f"""\[ \\widehat{{\\text{{Weight}}}} = {intercept:.2f}{slope:.2f} \\text{{Height}} \]"""
-        )
+def _(intercept, mo, slope):
+    equation_ols = mo.md(
+        f"""$$ \\widehat{{\\text{{Weight}}}} = {intercept:.2f}{slope:+.2f} \\text{{Height}} $$"""
+    )
     return (equation_ols,)
 
 
 @app.cell
-def __(equation_ols):
+def _(equation_ols):
     equation_ols
     return
 
 
 @app.cell(hide_code=True)
-def __(final_altair_chart):
+def _(final_altair_chart):
     final_altair_chart
     return
 

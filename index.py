@@ -2,7 +2,6 @@
 # requires-python = '>=3.13'
 # dependencies = [
 #     'marimo',
-#     'polars==1.22.0',
 # ]
 # ///
 

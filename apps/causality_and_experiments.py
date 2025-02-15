@@ -1,3 +1,11 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "altair==5.5.0",
+#     "marimo",
+#     "polars==1.22.0",
+# ]
+# ///
 import marimo
 
 __generated_with = "0.10.12"
@@ -25,25 +33,25 @@ def _(mo):
 
         Let's make a simple econometric model:
 
-        \[
+        $$
         y = \\beta_0 + \\beta_1 x + \\varepsilon
-        \]
+        $$
 
         Two or three approaches are generally taken in econometric (and not only econometric) modeling depending on the goal of the analysis.
 
-        ### To **explain** relationship between \(x\) and \(y\)
+        ### To **explain** relationship between $x$ and $y$
 
-        We care about the existence and size of a relatioship between variables. We use this when we care about ifs and whys, which should influence our decision making. We are concerned about the sign and the size of \(\\beta_1\), and about how much confidence we have in that \(\\beta_1\).
+        We care about the existence and size of a relatioship between variables. We use this when we care about ifs and whys, which should influence our decision making. We are concerned about the sign and the size of $\\beta_1$, and about how much confidence we have in that $\\beta_1$.
 
         #### Descriptive
-        Here, we just describe relationship between variables. \(\\beta_1\) shows the size of the relationship between \(x\) and \(y\) of size.
+        Here, we just describe relationship between variables. $\\beta_1$ shows the size of the relationship between $x$ and $y$ of size.
 
         #### Structural (Causal)
-        Here, we attempt to identify causal relationships. \(\\beta_1\) shows how much does \(x\) cause \(y\).
+        Here, we attempt to identify causal relationships. $\\beta_1$ shows how much does $x$ cause $y$.
 
-        ### To **predict** \(y\)
+        ### To **predict** $y$
 
-        We do not care as much about the existence and size of a relatioship between variables, but rather about how well can our model predict future \(y\). We are concerned about how close are our predictions to newly observed values of y.
+        We do not care as much about the existence and size of a relatioship between variables, but rather about how well can our model predict future $y$. We are concerned about how close are our predictions to newly observed values of y.
         """
     )
     return
@@ -85,7 +93,7 @@ def _(chart, mo):
         f"""
     ### Correlation vs causation
 
-    Correlation does not imply causation. Just because I find (or see) a relationship between variables \(x\) and \(y\), it does not mean that \(x\) causes \(y\) or that changes in \(y\) happened due to changes in \(x\).
+    Correlation does not imply causation. Just because I find (or see) a relationship between variables $x$ and $y$, it does not mean that $x$ causes $y$ or that changes in $y$ happened due to changes in $x$.
 
     #### Spurious correlation or regression
 
@@ -97,11 +105,11 @@ def _(chart, mo):
 
     #### Causal Schemes
 
-    Even if the relationship between \(x\) and \(y\) is genuine, the causal relationship can go in different directions.
+    Even if the relationship between $x$ and $y$ is genuine, the causal relationship can go in different directions.
 
-    1. \( x \\rightarrow y \), in other words \(x\) causes \(y\)
-    2. \( y \\rightarrow x \), in other words \(y\) causes \(x\)
-    3. \( x \\leftarrow z \\rightarrow y \), in other words \(z\) cause both \(x\) and \(y\).
+    1. $ x \\rightarrow y $, in other words $x$ causes $y$
+    2. $ y \\rightarrow x $, in other words $y$ causes $x$
+    3. $ x \\leftarrow z \\rightarrow y $, in other words $z$ cause both $x$ and $y$.
 
     Few examples of the possible relationships:
     """
@@ -133,7 +141,7 @@ def _(mo):
 
         **Laboratory Experiments:** Conducted in a controlled environment, usually a laboratory (hence the name).
 
-        **Ceteris Paribus modeling:** Regression attempts to model the effect of \(x\) on \(y\) ceteris paribus ('all else staying the same'). It is used as a complement or a substitute to the experimental design. Estimating relationships ceteris paribus do not guarantee we find genuine causal effects, but it is often the best we can do.
+        **Ceteris Paribus modeling:** Regression attempts to model the effect of $x$ on $y$ ceteris paribus ('all else staying the same'). It is used as a complement or a substitute to the experimental design. Estimating relationships ceteris paribus do not guarantee we find genuine causal effects, but it is often the best we can do.
         """
     )
     return
