@@ -35,14 +35,15 @@ def _(mo):
 
 
 @app.cell
-def _():
-    main_menu = 'https://kejtos.github.io/marimo_test/'
+def _(mo):
+    main_menu = mo.as_html(f'<a href="https://kejtos.github.io/marimo_test/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
     return (main_menu,)
 
 
 @app.cell
 def _(main_menu, mo):
-    mo.md(f"[{mo.icon('carbon:return')} Back to the menu]({main_menu})")
+    main_menu
+    # mo.md(f"[{mo.icon('carbon:return')} Back to the menu]({main_menu})")
     return
 
 
