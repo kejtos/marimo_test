@@ -13,30 +13,21 @@ app = marimo.App()
 
 @app.cell
 def _():
+    from apps.helpers.menu import menu
+    output, definitions = menu.run()
+    output
+    return definitions, menu, output
+
+
+@app.cell
+def _():
     import marimo as mo
-    import polars as pl
-    return mo, pl
+    return mo
 
 
 @app.cell
 def menu(mo):
-    mo.sidebar(
-        [
-            mo.md('# testos'),
-            mo.nav_menu(
-                {
-                    '#/home': f'{mo.icon('lucide:home')} Home',
-                    '#/about': f'{mo.icon('lucide:user')} About',
-                    '#/contact': f'{mo.icon('lucide:phone')} Contact',
-                    'Links': {
-                        '/marimo_test/apps/heteroscedasticity.html': 'Heteroscedasticity',
-                        '/marimo_test/apps/hypothesis_testing.html': 'Hypothesis testing',
-                    },
-                },
-                orientation='vertical',
-            ),
-        ]
-    )
+    mo.md('All the apps should run in your browser. Some of them might take a few seconds, especially if you have got a slow PC.')
     return
 
 

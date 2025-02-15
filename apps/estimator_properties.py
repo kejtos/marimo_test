@@ -16,6 +16,14 @@ app = marimo.App(layout_file="layouts/estimator_properties.grid.json")
 
 @app.cell
 def _():
+    from helpers.menu import menu
+    output, definitions = menu.run()
+    output
+    return definitions, menu, output
+
+
+@app.cell
+def _():
     # dodelat consistency. pridat ty unbiased tak, aby byl vzdycky vygenerovanej ten nejvic a dynamicky se to menilo
     # dodelat to sampl,e tlacitko
     return

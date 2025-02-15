@@ -14,6 +14,14 @@ app = marimo.App(width="medium", layout_file="layouts/issues_r_squared.grid.json
 
 
 @app.cell
+def _():
+    from helpers.menu import menu
+    output, definitions = menu.run()
+    output
+    return definitions, menu, output
+
+
+@app.cell
 def __():
     import altair as alt
     return (alt,)
