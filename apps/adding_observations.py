@@ -36,7 +36,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    main_menu = mo.as_html(f'<a href="https://kejtos.github.io/marimo_test/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
+    main_menu = mo.Html(f'<a href="https://kejtos.github.io/marimo_test/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
     return (main_menu,)
 
 
