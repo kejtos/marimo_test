@@ -15,14 +15,6 @@ app = marimo.App()
 
 
 @app.cell
-def _():
-    from helpers.menu import menu
-    output, definitions = menu.run()
-    output
-    return definitions, menu, output
-
-
-@app.cell
 def __():
     import altair as alt
     return (alt,)

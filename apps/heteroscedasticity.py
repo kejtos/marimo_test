@@ -18,13 +18,6 @@ app = marimo.App(
 )
 
 
-@app.cell
-def _():
-    from helpers.menu import menu
-    output, definitions = menu.run()
-    output
-    return definitions, menu, output
-
 @app.cell(hide_code=True)
 def __():
     import marimo as mo

@@ -11,14 +11,6 @@ __generated_with = "0.11.4"
 app = marimo.App(width="medium")
 
 
-@app.cell
-def _():
-    from helpers.menu import menu
-    output, definitions = menu.run()
-    output
-    return definitions, menu, output
-
-
 @app.cell(hide_code=True)
 def _():
     import marimo as mo

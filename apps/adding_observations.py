@@ -19,14 +19,6 @@ app = marimo.App(
 
 @app.cell
 def _():
-    from helpers.menu import menu
-    output, definitions = menu.run()
-    output
-    return definitions, menu, output
-
-
-@app.cell
-def _():
     import marimo as mo
     import altair as alt
     import pandas as pd
@@ -40,6 +32,18 @@ def _(mo):
 
     mo.show_code()
     return inv, np
+
+
+@app.cell
+def _():
+    main_menu = 'https://kejtos.github.io/marimo_test/'
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu, mo):
+    mo.md(f"[{mo.icon('carbon:return')} Back to the menu]({main_menu})")
+    return
 
 
 @app.cell(hide_code=True)
