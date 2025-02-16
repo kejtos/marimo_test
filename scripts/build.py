@@ -73,7 +73,7 @@ def generate_index(notebooks: dict[List[str]], output_dir: str) -> None:
                     f'      <div class="p-4 border border-gray-200 rounded-lg max-w-xs justify-self-start">\n'
                     f'        <h3 class="text-lg font-semibold mb-2">{display_name}</h3>\n'
                     f'        <div class="flex gap-2">\n'
-                    f'          <a href="{notebook.replace(".py", ".html")}" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
+                    f'          <a href="{notebook_name}.html" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
                     f"        </div>\n"
                     f"      </div>\n"
                 )
@@ -91,7 +91,7 @@ def generate_index(notebooks: dict[List[str]], output_dir: str) -> None:
                     f'      <div class="p-4 border border-gray-200 rounded-lg max-w-xs justify-self-start">\n'
                     f'        <h3 class="text-lg font-semibold mb-2">{display_name}</h3>\n'
                     f'        <div class="flex gap-2">\n'
-                    f'          <a href="{notebook.replace(".py", ".html")}" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
+                    f'          <a href="{notebook_name}.html" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
                     f"        </div>\n"
                     f"      </div>\n"
                 )
