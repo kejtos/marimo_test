@@ -66,7 +66,7 @@ def generate_index(notebooks: dict[List[str]], output_dir: str) -> None:
         <h2 class="text-xl font-bold mb-4">4EK214</h2>"""
             )
             for notebook in notebooks['4EK214']:
-                notebook_name = notebook.split("\\")[-1].replace(".py", "")
+                notebook_name = notebook.split("/")[-1].replace(".py", "")
                 display_name = notebook_name.replace("_", " ").title()
 
                 f.write(
@@ -84,7 +84,7 @@ def generate_index(notebooks: dict[List[str]], output_dir: str) -> None:
             )
 
             for notebook in notebooks['4EK602']:
-                notebook_name = notebook.split("\\")[-1].replace(".py", "")
+                notebook_name = notebook.split("/")[-1].replace(".py", "")
                 display_name = notebook_name.replace("_", " ").title()
 
                 f.write(
