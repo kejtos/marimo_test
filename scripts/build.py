@@ -124,7 +124,7 @@ def export_course(course, dir):
         return
 
     for nb in all_notebooks:
-        export_html_wasm(nb, dir, as_app=nb.startswith("apps/"))
+        export_html_wasm(nb, dir, as_app='apps' in nb)
 
     return all_notebooks
 
