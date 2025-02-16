@@ -39,7 +39,7 @@ def export_html_wasm(notebook_path: str, output_dir: str, as_app: bool = False) 
         return False
 
 
-def generate_index(all_notebooks: List[str], output_dir: str) -> None:
+def generate_index(notebooks: dict[List[str]], output_dir: str) -> None:
     """Generate the index.html file."""
     print("Generating index.html")
 
@@ -57,32 +57,76 @@ def generate_index(all_notebooks: List[str], output_dir: str) -> None:
     <title>marimo</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body class="font-sans max-w-2xl mx-auto p-8 leading-relaxed">
+  <body class="font-sans max-w-4xl mx-auto p-8 leading-relaxed">
     <div class="mb-8">
       <img src="https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo-logotype-thick.svg" alt="marimo" class="h-20" />
     </div>
-    <div class="grid gap-4">
-"""
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col">
+        <h2 class="text-xl font-bold mb-4">4EK214</h2>"""
             )
-            for notebook in all_notebooks:
-                notebook_name = notebook.split("/")[-1].replace(".py", "")
+            for notebook in notebooks['4EK214']:
+                notebook_name = notebook.split("\\")[-1].replace(".py", "")
                 display_name = notebook_name.replace("_", " ").title()
 
                 f.write(
-                    f'      <div class="p-4 border border-gray-200 rounded">\n'
+                    f'      <div class="p-4 border border-gray-200 rounded-lg max-w-xs justify-self-start">\n'
                     f'        <h3 class="text-lg font-semibold mb-2">{display_name}</h3>\n'
                     f'        <div class="flex gap-2">\n'
-                    f'          <a href="{notebook.replace(".py", ".html")}" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open Notebook</a>\n'
+                    f'          <a href="{notebook.replace(".py", ".html")}" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
                     f"        </div>\n"
                     f"      </div>\n"
                 )
             f.write(
-                """    </div>
+      """</div>
+      <div class="flex flex-col">
+        <h2 class="text-xl font-bold mb-4">4EK602</h2>"""
+            )
+
+            for notebook in notebooks['4EK602']:
+                notebook_name = notebook.split("\\")[-1].replace(".py", "")
+                display_name = notebook_name.replace("_", " ").title()
+
+                f.write(
+                    f'      <div class="p-4 border border-gray-200 rounded-lg max-w-xs justify-self-start">\n'
+                    f'        <h3 class="text-lg font-semibold mb-2">{display_name}</h3>\n'
+                    f'        <div class="flex gap-2">\n'
+                    f'          <a href="{notebook.replace(".py", ".html")}" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Open</a>\n'
+                    f"        </div>\n"
+                    f"      </div>\n"
+                )
+
+            f.write(
+        """</div>
+    </div>
   </body>
 </html>"""
             )
+
     except IOError as e:
         print(f"Error generating index.html: {e}")
+
+
+def export_course(course, dir):
+    all_notebooks: List[str] = []
+    for directory in [f"{course}/notebooks", f"{course}/apps"]:
+        dir_path = Path(directory)
+        if not dir_path.exists():
+            print(f"Warning: Directory not found: {dir_path}")
+            continue
+
+    for path in dir_path.rglob("*.py"):
+        if "helpers" not in path.parts:
+            all_notebooks.append(str(path))
+
+    if not all_notebooks:
+        print("No notebooks found!")
+        return
+
+    for nb in all_notebooks:
+        export_html_wasm(nb, dir, as_app=nb.startswith("apps/"))
+
+    return all_notebooks
 
 
 def main() -> None:
@@ -92,27 +136,12 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    all_notebooks: List[str] = []
-    for directory in ["notebooks", "apps"]:
-        dir_path = Path(directory)
-        if not dir_path.exists():
-            print(f"Warning: Directory not found: {dir_path}")
-            continue
+    courses = ['4EK214', '4EK602']
+    notebooks = {}
+    for course in courses:
+        notebooks[course] = export_course(course=course, dir=args.output_dir)
 
-        all_notebooks.extend(str(path) for path in dir_path.rglob("*.py"))
-
-    if not all_notebooks:
-        print("No notebooks found!")
-        return
-
-    # Export notebooks sequentially
-    for nb in all_notebooks:
-        export_html_wasm(nb, args.output_dir, as_app=nb.startswith("apps/"))
-
-
-    # Generate index only if all exports succeeded
-    # export_html_wasm('index.py', args.output_dir, as_app=True)
-    generate_index(all_notebooks, args.output_dir)
+    generate_index(notebooks, args.output_dir)
 
 
 if __name__ == "__main__":
