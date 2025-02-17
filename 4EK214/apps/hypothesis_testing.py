@@ -28,8 +28,13 @@ def _():
     from scipy.stats import norm, t, f
     from numpy.linalg import inv
     from scipy import stats
-    _ = alt.theme.enable('dark')
     return alt, f, inv, mo, norm, np, pd, stats, t
+
+
+@app.cell
+def _(alt):
+    _ = alt.theme.enable('dark')
+    return
 
 
 @app.cell
@@ -60,7 +65,7 @@ def _(mo, str_1s_t, str_2s_t):
 @app.cell
 def _(mo):
     main_menu = mo.Html(
-        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'<a href="https://kejtos.github.io/materials/" target="_parent" '
         f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
         f'{mo.icon("carbon:return")} Back to the menu</a>'
     )

@@ -20,19 +20,24 @@ app = marimo.App(
 
 @app.cell
 def _():
-    import altair as alt
-    _ = alt.theme.enable('dark')
-    return (alt,)
-
-
-@app.cell
-def _():
     import marimo as mo
     import numpy as np
     import pandas as pd
     TEAL = '#56B4E9'
     GREEN = '#009E73'
     return GREEN, TEAL, mo, np, pd
+
+
+@app.cell
+def _():
+    import altair as alt
+    return (alt,)
+
+
+@app.cell
+def _(alt):
+    _ = alt.theme.enable('dark')
+    return
 
 
 @app.cell

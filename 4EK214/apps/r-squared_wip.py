@@ -70,12 +70,13 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-    f'''You can visualize all the squares and \\(R^2\\) in the following GeoGebra tool. Sorry for the flashbang, GeoGebra does not ahve dark mode. Use fullscreen. Depending on your resolution, the spacing may bit may not be wrong.
+    mo.md("""You can visualize all the squares and in the following GeoGebra tool. It is likely too blurry, fullscreen recommended (sorry for the flashbang, GeoGebra does not have dark mode).""")
+    return
 
-    {mo.iframe('<iframe src="https://www.geogebra.org/classic/xxrvsmat?embed" width="950" height="650" allowfullscreen style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>', height=700)}
-    '''
-    )
+
+@app.cell
+def _(mo):
+    mo.iframe('<iframe src="https://www.geogebra.org/material/iframe/id/xxrvsmat/width/1980/height/1080/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/false/rc/true/ld/false/sdz/true/ctl/false" width="1020" height="556" allowfullscreen></iframe>', height=700)
     return
 
 

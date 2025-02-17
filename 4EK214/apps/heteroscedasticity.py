@@ -1,8 +1,8 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#     "altair==5.5.0",
 #     "marimo",
+#     "altair==5.5.0",
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
 #     "scipy==1.15.2",
@@ -21,14 +21,19 @@ app = marimo.App(width="medium", app_title="Heteroscedasticity")
 def _():
     import marimo as mo
     import altair as alt
-    _ = alt.theme.enable('dark')
     return alt, mo
+
+
+@app.cell
+def _(alt):
+    _ = alt.theme.enable('dark')
+    return
 
 
 @app.cell
 def _(mo):
     main_menu = mo.Html(
-        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'<a href="https://kejtos.github.io/materials/" target="_parent" '
         f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
         f'{mo.icon("carbon:return")} Back to the menu</a>'
     )

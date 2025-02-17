@@ -19,8 +19,13 @@ app = marimo.App()
 @app.cell
 def _():
     import altair as alt
-    _ = alt.theme.enable('dark')
     return (alt,)
+
+
+@app.cell
+def _(alt):
+    _ = alt.theme.enable('dark')
+    return
 
 
 @app.cell
