@@ -64,8 +64,7 @@ def _():
     import numpy as np
     import pandas as pd
     import altair as alt
-    from helpers.plot_beauty import beauty_altair
-    return alt, beauty_altair, mo, np, pd
+    return alt, mo, np, pd
 
 
 @app.cell
@@ -229,7 +228,7 @@ def _(alt, means, slider_height, slider_width):
 
 
 @app.cell
-def _(alt, b_show_e, beauty_altair, hist, mo, population_mean):
+def _(alt, b_show_e, hist, mo, population_mean):
     if b_show_e.value:
         rule = exp_value_line = (
             alt.Chart()
@@ -243,8 +242,8 @@ def _(alt, b_show_e, beauty_altair, hist, mo, population_mean):
             .encode(x=alt.datum(population_mean))
         )
 
-    plotos = beauty_altair(hist + rule)
-    # plotos = (hist + rule).configure_axis(grid=False)
+    # plotos = beauty_altair(hist + rule)
+    plotos = (hist + rule).configure_axis(grid=False)
 
     mo.output.replace(plotos)
     return exp_value_line, plotos, rule
@@ -322,7 +321,6 @@ def _(
 @app.cell
 def _(
     alt,
-    beauty_altair,
     colors,
     df_biased,
     sample_sizes,
@@ -330,7 +328,7 @@ def _(
     slider_height,
     slider_width,
 ):
-    beauty_altair(
+    (
         alt.Chart(df_biased)
         .transform_fold(
             [f"{n} sampled" for n in sample_sizes] + ["unbiased"],

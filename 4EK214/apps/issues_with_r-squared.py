@@ -12,7 +12,7 @@
 import marimo
 
 __generated_with = "0.9.10-dev11"
-app = marimo.App(width="medium", layout_file="layouts/issues_r_squared.grid.json")
+app = marimo.App(width="medium", layout_file="layouts/issues_with_r_squared.grid.json")
 
 
 @app.cell

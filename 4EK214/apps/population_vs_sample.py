@@ -14,7 +14,7 @@ import marimo
 __generated_with = "0.11.4"
 app = marimo.App(
     width="medium",
-    layout_file="layouts/population_sample.grid.json",
+    layout_file="layouts/population_vs_sample.grid.json",
 )
 
 
