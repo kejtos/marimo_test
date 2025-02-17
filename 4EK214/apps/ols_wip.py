@@ -51,7 +51,7 @@ def _():
 def _(alt):
     GRAPH_WIDTH = 600
     GRAPH_HEIGHT = 200
-    _ = alt.theme.enable('opaque')
+    _ = alt.theme.enable('dark')
     return GRAPH_HEIGHT, GRAPH_WIDTH
 
 
