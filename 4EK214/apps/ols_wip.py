@@ -5,20 +5,21 @@
 #     "marimo",
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
-#     "scipy==1.15.1",
+#     "scipy==1.15.2",
 # ]
 # theme = "dark"
 # ///
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App()
 
 
 @app.cell
 def _():
     import altair as alt
+    _ = alt.theme.enable('dark')
     return (alt,)
 
 

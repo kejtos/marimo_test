@@ -5,31 +5,44 @@
 #     "marimo",
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
-#     "scipy==1.15.1",
+#     "scipy==1.15.2",
 #     "statsmodels==0.14.4",
 # ]
 # theme = "dark"
 # ///
 
-
 import marimo
 
-__generated_with = "0.9.10-dev11"
-app = marimo.App(
-    width="medium",
-    app_title="Heteroscedasticity",
-)
+__generated_with = "0.11.5"
+app = marimo.App(width="medium", app_title="Heteroscedasticity")
 
 
 @app.cell(hide_code=True)
-def __():
+def _():
     import marimo as mo
     import altair as alt
+    _ = alt.theme.enable('dark')
     return alt, mo
 
 
+@app.cell
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu):
+    main_menu.right()
+    return
+
+
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         r"""
         ---
@@ -41,7 +54,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         Heteroskedasticity occurs when the variance for all observations in a data set are not the same. Let's examine
@@ -55,7 +68,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         r"""The analysis is done in python. It is not necessary to understand the code. You can ignore it, but it is a great way to get a hands on experience. If you want to follow, you need to install some packages first."""
     ).style(text_align="justify")
@@ -63,7 +76,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     import pandas as pd
     import numpy as np
     import statsmodels.api as sm
@@ -75,7 +88,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
@@ -92,7 +105,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo, sm):
+def _(mo, sm):
     food = sm.datasets.engel.load_pandas().data
     food
     mo.show_code()
@@ -100,13 +113,13 @@ def __(mo, sm):
 
 
 @app.cell(hide_code=True)
-def __(food, mo):
+def _(food, mo):
     mo.ui.table(food)
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
@@ -124,7 +137,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(food, mo, sm):
+def _(food, mo, sm):
     X = sm.add_constant(food["income"])
     y = food["foodexp"]
     model_ols = sm.OLS(y, X).fit()
@@ -153,7 +166,7 @@ def __(food, mo, sm):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
@@ -167,14 +180,14 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo, model_ols):
+def _(mo, model_ols):
     with mo.redirect_stdout():
         print(model_ols.summary())
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         ---
@@ -185,7 +198,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         Heteroskedasticity (homoscedasticity) of the error term occurs when the variance for all observations in a data set are not (are) the same. It therefore makes the variance of the error term differ between observations, which is a vialoation of the Gauss-Markov thoerem. Specifically, it violates the assumption (MLR.5) that the conditional variance of the error term is constant, therefore
@@ -207,7 +220,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         ---
@@ -218,13 +231,13 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""### 2.1 **Residual Plots**""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\\( \\hat{y} \\)). If there is an evident pattern in the plot, then residuals are heteroskedastic."""
     ).style({"text-align": "justify"})
@@ -232,7 +245,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(alt, fitted_values, food, mo, resid):
+def _(alt, fitted_values, food, mo, resid):
     food_plot = food.copy()
     food_plot["fitted_values"] = fitted_values
     food_plot["resi"] = resid
@@ -264,7 +277,7 @@ def __(alt, fitted_values, food, mo, resid):
 
 
 @app.cell(hide_code=True)
-def __(final_chart, mo):
+def _(final_chart, mo):
     mo.md(
         f"""
     One (mostly flawed) way of detecting heteroskedasticity is by visually analyzing plot of residuals (since residuals are estimates of the error term) against the fitted values (\\( \\hat{{y}} \\)). If there is an evident pattern in the plot, then residuals are heteroskedastic.
@@ -278,13 +291,13 @@ def __(final_chart, mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""### 2.2 **The Breusch-Pagan test**""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         A more formal (and safer) way of detecting heteroskedasticity is by using statistical tests. Breusch-Pagan test is one such test. It involves using a variance function and using a \\( \\chi^2 \\)-test to test the null hypothesis that the residuals (and therefore the error term) are homoscedastic. 
@@ -341,13 +354,13 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""#### 2.2.1 **The Breusch-Pagan test by hand**""")
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(
         r"""To do the Breusch-Pagan test by hand, we need to square the residuals from the ols model we estimated before. Then, we simply estimate the model above, where we try to fit the regressors (Income in this case) to the squared residuals."""
     ).style({"text-align": "justify"})
@@ -355,7 +368,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(food, mo, resid, sm):
+def _(food, mo, resid, sm):
     resid_sq = resid**2
     X_var = sm.add_constant(food["income"])
     model_var = sm.OLS(resid_sq, X_var).fit()
@@ -365,26 +378,26 @@ def __(food, mo, resid, sm):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo, model_var):
+def _(mo, model_var):
     with mo.redirect_stdout():
         print(model_var.summary())
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo, model_var):
+def _(mo, model_var):
     r_sq_bp = model_var.rsquared
     alpha = 0.05
 
@@ -393,7 +406,7 @@ def __(mo, model_var):
 
 
 @app.cell(hide_code=True)
-def __(N, alpha, mo, r_sq_bp):
+def _(N, alpha, mo, r_sq_bp):
     mo.md(
         f"""
     <div style="height: 0.5em;"></div>
@@ -418,7 +431,7 @@ def __(N, alpha, mo, r_sq_bp):
 
 
 @app.cell(hide_code=True)
-def __(N, chi2, mo, r_sq_bp):
+def _(N, chi2, mo, r_sq_bp):
     chi2_stat = N * r_sq_bp
     critical_value = chi2.ppf(0.95, df=1)
     p_val_bp = chi2.sf(chi2_stat, df=1)
@@ -428,7 +441,7 @@ def __(N, chi2, mo, r_sq_bp):
 
 
 @app.cell(hide_code=True)
-def __(chi2_stat, critical_value, p_val_bp):
+def _(chi2_stat, critical_value, p_val_bp):
     if chi2_stat > critical_value:
         reject_hand = f"Since the p-value = {p_val_bp:.4f} < \\( \\alpha \\) = 0.05, or alternatively, since the observed statistic = {chi2_stat:.4f} > critical value = {critical_value:.4f}, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
     else:
@@ -437,7 +450,7 @@ def __(chi2_stat, critical_value, p_val_bp):
 
 
 @app.cell(hide_code=True)
-def __(chi2_stat, critical_value, mo, p_val_bp):
+def _(chi2_stat, critical_value, mo, p_val_bp):
     mo.md(
         f"""
     | **Metric**                                     | **Value**            |
@@ -451,7 +464,7 @@ def __(chi2_stat, critical_value, mo, p_val_bp):
 
 
 @app.cell(hide_code=True)
-def __(mo, reject_hand):
+def _(mo, reject_hand):
     mo.md(
         f"""
     {reject_hand}
@@ -461,7 +474,7 @@ def __(mo, reject_hand):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
@@ -473,7 +486,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(X, het_breuschpagan, mo, model_ols):
+def _(X, het_breuschpagan, mo, model_ols):
     bp_test = het_breuschpagan(model_ols.resid, X)
     labels = ["LM Statistic", "LM-Test p-value", "F-Statistic", "F-Test p-value"]
     bp_results = dict(zip(labels, bp_test))
@@ -486,7 +499,7 @@ def __(X, het_breuschpagan, mo, model_ols):
 
 
 @app.cell(hide_code=True)
-def __(alpha, lm_pval, p_val_bp):
+def _(alpha, lm_pval, p_val_bp):
     if lm_pval < alpha:
         reject_test = f"Since the p-value = {p_val_bp:.4f} < \\( \\alpha \\) = 0.05, we **reject** the null hypothesis and conclude that the error term is heteroskedastic."
     else:
@@ -495,7 +508,7 @@ def __(alpha, lm_pval, p_val_bp):
 
 
 @app.cell(hide_code=True)
-def __(lm_pval, lm_stat, mo, reject_test):
+def _(lm_pval, lm_stat, mo, reject_test):
     mo.md(
         f"""
     The Breusch-Pagan test results:
@@ -517,7 +530,7 @@ def __(lm_pval, lm_stat, mo, reject_test):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         ---
@@ -528,7 +541,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         Now that we have identified that our residuals are heteroscedastic, what can we do about it? Recall that the two main consequences of heteroskedasticity are:
@@ -541,16 +554,16 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""### 3.1 **Regression With Robust Standard Errors**""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
-        If we are willing to accept the fact that OLS is no longer BLUE, we can still perform our regression analysis to correct the issue of incorrect standard errors so that our confidence intervals and hypothesis tests are valid. We do this by using heteroskedasticity-consistent standard errors or simply robust standard errors. The concept of robust standard errors was suggested by Halbert White. 
+        If we are willing to accept the fact that OLS is no longer BLUE, we can still perform our regression analysis to correct the issue of incorrect standard errors so that our confidence intervals and hypothesis tests are valid. We do this by using heteroskedasticity-consistent standard errors or simply robust standard errors. The concept of robust standard errors was suggested by Halbert White.
 
         #### a) Matrix version
 
@@ -601,7 +614,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo, model_ols):
+def _(mo, model_ols):
     robust_cov = model_ols.get_robustcov_results(cov_type="HC1")
     std_err_rob = robust_cov.bse
     mo.show_code()
@@ -609,26 +622,26 @@ def __(mo, model_ols):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo, robust_cov):
+def _(mo, robust_cov):
     with mo.redirect_stdout():
         print(robust_cov.summary())
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(
         r"""
         We also need the t-statistic for 95% confidence intervals.
@@ -640,14 +653,14 @@ def __(mo):
 
 
 @app.cell
-def __(N, alpha, k, mo, t):
+def _(N, alpha, k, mo, t):
     t_975 = t.ppf(1 - alpha / 2, N - k - 1)
     mo.show_code()
     return (t_975,)
 
 
 @app.cell(hide_code=True)
-def __(beta_ols, bse_ols, mo, std_err_rob, t_975):
+def _(beta_ols, bse_ols, mo, std_err_rob, t_975):
     mo.md(
         f"""
     <div style="height: 0.5em;"></div>
@@ -667,13 +680,13 @@ def __(beta_ols, bse_ols, mo, std_err_rob, t_975):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""### 3.3 Generalized Least Squares with known form of variance (GLS)""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
     When the error term is heteroscedastic, and the OLS estimator is therefore no longer BLUE, we can use a different estimator that depends on the variance \\( \\sigma_i^2 \\). This estimator is referred to as the **Generalized Least Squares (GLS)** estimator. Leaving the structure of the model intact, it is possible to turn the heteroskedastic model into a homoskedastic one. When we know the structure of the variance (rarely happens, close to never in social sciences), we can use use that structure and apply GLS.
@@ -714,13 +727,13 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md("""### 3.2 **Generalized Least Squares With Unknown Form of Variance (FGLS)**""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         However, we usually do not know the variance structure. When we do not know the structure, we have to estimate it first. This procedure is called **Feasible Generalized Least Squares (FGLS)**. Below is a flowchart of the procedure.
@@ -732,7 +745,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.mermaid(
         """
     flowchart TD
@@ -755,7 +768,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
@@ -799,7 +812,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(food, mo, np, resid_sq, sm):
+def _(food, mo, np, resid_sq, sm):
     log_income = np.log(food["income"])
     log_resid_sq = np.log(resid_sq)
     model_var_log = sm.OLS(log_resid_sq, sm.add_constant(log_income)).fit()
@@ -810,26 +823,26 @@ def __(food, mo, np, resid_sq, sm):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo, model_var_log):
+def _(mo, model_var_log):
     with mo.redirect_stdout():
         print(model_var_log.summary())
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         The next step is to transform the observations in such a way that the transformed model has a constant error variance. To do so, we can obtain variance estimates from 
@@ -866,7 +879,7 @@ def __(mo):
 
 
 @app.cell(hide_code=True)
-def __(X_var, food, mo, model_var_log, np, sm):
+def _(X_var, food, mo, model_var_log, np, sm):
     varfunc = np.exp(model_var_log.fittedvalues)
 
     weights = 1 / varfunc
@@ -879,26 +892,26 @@ def __(X_var, food, mo, model_var_log, np, sm):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(mo, model_gls):
+def _(mo, model_gls):
     with mo.redirect_stdout():
         print(model_gls.summary())
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md(r"""<div style="height: 0.5em;"></div>""")
     return
 
 
 @app.cell(hide_code=True)
-def __(beta_gls, beta_ols, mo):
+def _(beta_gls, beta_ols, mo):
     mo.md(
         f"""
     Our fitted models are: 
@@ -913,19 +926,19 @@ def __(beta_gls, beta_ols, mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
+def _(mo):
     mo.md(
         """
         <div style="height: 0.5em;"></div>
 
-        And below is the comparison of standard errors and R(\\^2\\) of the two models:
+        And below is the comparison of standard errors and R\\(^2\\) of the two models:
         """
     )
     return
 
 
 @app.cell(hide_code=True)
-def __(bse_gls, bse_ols, mo, r2_gls, r2_ols):
+def _(bse_gls, bse_ols, mo, r2_gls, r2_ols):
     mo.md(
         f"""
     Metric         | OLS                     | WLS                     |
@@ -938,7 +951,7 @@ def __(bse_gls, bse_ols, mo, r2_gls, r2_ols):
 
 
 @app.cell(hide_code=True)
-def __(alt, beta_gls, beta_ols, food, mo, pd):
+def _(alt, beta_gls, beta_ols, food, mo, pd):
     line_data = pd.DataFrame(
         {
             "income": food["income"],
@@ -989,7 +1002,7 @@ def __(alt, beta_gls, beta_ols, food, mo, pd):
 
 
 @app.cell(hide_code=True)
-def __(final_chart_2, mo):
+def _(final_chart_2, mo):
     mo.md(
         f"""
     Finally, we can look at how the fitted values between the modesl differ on the graph below.
@@ -1003,8 +1016,30 @@ def __(final_chart_2, mo):
 
 
 @app.cell(hide_code=True)
-def __(mo):
-    mo.md("""[^1]: [White's paper](https://www.jstor.org/stable/1912934), which was [the most cited paper in economics at least during 1970-2006](https://www.aeaweb.org/articles?id=10.1257/jep.20.4.189), and still might be.""")
+def _(mo):
+    mo.md(
+        """
+        ---
+
+        1. [White's paper](https://www.jstor.org/stable/1912934), which was [the most cited paper in economics at least during 1970-2006](https://www.aeaweb.org/articles?id=10.1257/jep.20.4.189), and still might be.
+        """
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    mein_menu2 = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (mein_menu2,)
+
+
+@app.cell
+def _(mein_menu2):
+    mein_menu2.right()
     return
 
 

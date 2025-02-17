@@ -11,7 +11,7 @@
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App(layout_file="layouts/estimator_properties.grid.json")
 
 
@@ -53,6 +53,22 @@ def _(slider_cons):
 
 
 @app.cell
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu):
+    main_menu.right()
+    return
+
+
+@app.cell
 def _(b_reset, b_sample, b_show_e, mo):
     mo.hstack([b_sample, b_reset, b_show_e], justify="start")
     return
@@ -64,6 +80,7 @@ def _():
     import numpy as np
     import pandas as pd
     import altair as alt
+    _ = alt.theme.enable('dark')
     return alt, mo, np, pd
 
 
@@ -242,8 +259,11 @@ def _(alt, b_show_e, hist, mo, population_mean):
             .encode(x=alt.datum(population_mean))
         )
 
-    # plotos = beauty_altair(hist + rule)
-    plotos = (hist + rule).configure_axis(grid=False)
+    plotos = (
+        (hist + rule).configure_title(fontSize=16, anchor='middle')
+        .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
+        .configure_legend(titleFontSize=12, labelFontSize=10)
+    )
 
     mo.output.replace(plotos)
     return exp_value_line, plotos, rule
@@ -347,7 +367,11 @@ def _(
                 range=[*colors[: slider_cons.value], "orange"],
             ),
         )
-    ).properties(width=slider_width.value - 70, height=slider_height.value)
+        .configure_title(fontSize=16, anchor='middle')
+        .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
+        .configure_legend(titleFontSize=12, labelFontSize=10)
+        .properties(width=slider_width.value - 70, height=slider_height.value)
+    )
     # testos2 = alt.Chart().mark_rule(color="green", strokeWidth=3).encode(x=alt.datum(population_mean))
 
     # (testos+testos2)

@@ -5,25 +5,26 @@
 #     "marimo",
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
-#     "scipy==1.15.1",
+#     "scipy==1.15.2",
 # ]
 # theme = "dark"
 # ///
 
 import marimo
 
-__generated_with = "0.9.7-dev1"
+__generated_with = "0.11.5"
 app = marimo.App()
 
 
 @app.cell
-def __():
+def _():
     import altair as alt
+    _ = alt.theme.enable('dark')
     return (alt,)
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
     import numpy as np
     import pandas as pd
@@ -35,20 +36,36 @@ def __():
 
 
 @app.cell
-def __():
+def _():
     GRAPTH_WIDTH = 600
     GRAPTH_HEIGHT = 200
     return GRAPTH_HEIGHT, GRAPTH_WIDTH
 
 
 @app.cell
-def __(mo):
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu):
+    main_menu.right()
+    return
+
+
+@app.cell
+def _(mo):
     mo.md("""# Multicollinearity""")
     return
 
 
 @app.cell
-def __(alt, inv, mo, norm, np, pd):
+def _(alt, inv, mo, norm, np, pd):
     np.random.seed(55)
 
     _N = 100_000

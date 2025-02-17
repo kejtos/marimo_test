@@ -10,7 +10,7 @@
 
 import marimo
 
-__generated_with = "0.10.12"
+__generated_with = "0.11.5"
 app = marimo.App(width="medium")
 
 
@@ -24,7 +24,24 @@ def _():
 def _():
     import polars as pl
     import altair as alt
+    _ = alt.theme.enable('dark')
     return alt, pl
+
+
+@app.cell
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu):
+    main_menu.right()
+    return
 
 
 @app.cell(hide_code=True)
@@ -328,6 +345,22 @@ def _(alt, mo, pl):
         .properties(title="Spurious correlation", width=950, height=400)
     )
     return chart, df, scatter
+
+
+@app.cell
+def _(mo):
+    main_menu2 = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu2,)
+
+
+@app.cell
+def _(main_menu2):
+    main_menu2.right()
+    return
 
 
 if __name__ == "__main__":

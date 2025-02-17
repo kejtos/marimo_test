@@ -11,30 +11,36 @@
 
 import marimo
 
-__generated_with = "0.9.10-dev11"
-app = marimo.App(width="medium", layout_file="layouts/issues_with_r_squared.grid.json")
+__generated_with = "0.11.5"
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/issues_with_r-squared.grid.json",
+)
 
 
 @app.cell
-def __():
+def _():
     import altair as alt
+    _ = alt.theme.enable('dark')
     return (alt,)
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
     import numpy as np
     from numpy.random import normal, randint, seed
     from numpy import ones, exp, repeat, sum, mean
     from numpy.linalg import inv
     import pandas as pd
-    from helpers.plot_beauty import beauty_altair, ORANGE, TEAL, GREEN
+
+    ORANGE = '#E69F00'
+    TEAL = '#56B4E9'
+    GREEN = '#009E73'
     return (
         GREEN,
         ORANGE,
         TEAL,
-        beauty_altair,
         exp,
         inv,
         mean,
@@ -51,7 +57,7 @@ def __():
 
 
 @app.cell
-def __():
+def _():
     GRAPH_WIDTH = 1100
     GRAPH_HEIGHT = 500
     space = "&nbsp;"
@@ -59,7 +65,17 @@ def __():
 
 
 @app.cell
-def __(mo, space):
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(mo, space):
     headline = mo.md('<font size="7">Issues with R-squared</font>')
 
     headline_1 = mo.md(
@@ -88,7 +104,7 @@ def __(mo, space):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     n_reg = mo.ui.slider(
         start=1,
         stop=98,
@@ -102,7 +118,7 @@ def __(mo):
 
 
 @app.cell
-def __(inv, mean, mo, normal, np, ones, seed, sum):
+def _(inv, mean, mo, normal, np, ones, seed, sum):
     seed(11)  #  Changing the number generates different pseudorandom numbers
     rs_squared = []
     ars_squared = []
@@ -148,14 +164,13 @@ def __(inv, mean, mo, normal, np, ones, seed, sum):
 
 
 @app.cell
-def __(
+def _(
     GRAPH_HEIGHT,
     GRAPH_WIDTH,
     GREEN,
     ORANGE,
     alt,
     ars_squared,
-    beauty_altair,
     mo,
     n_reg,
     pd,
@@ -199,12 +214,18 @@ def __(
         .properties(width=GRAPH_WIDTH, height=GRAPH_HEIGHT / 2)
     )
 
-    chart_rs = mo.ui.altair_chart(beauty_altair(alt.vconcat(chart1, chart2)))
+    chart_rs = mo.ui.altair_chart(
+        alt.vconcat(chart1, chart2)
+        .configure_title(fontSize=16, anchor='middle')
+        .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
+        .configure_legend(titleFontSize=12, labelFontSize=10),
+        chart_selection=False
+    )
     return chart1, chart2, chart_rs, df_rs
 
 
 @app.cell
-def __(
+def _(
     GRAPH_HEIGHT,
     GRAPH_WIDTH,
     GREEN,
@@ -212,7 +233,6 @@ def __(
     ORANGE,
     TEAL,
     alt,
-    beauty_altair,
     normal,
     np,
     pd,
@@ -247,7 +267,7 @@ def __(
 
     selection = alt.selection_point(fields=["Variable"], bind="legend")
 
-    trend_vars_scatter = beauty_altair(
+    trend_vars_scatter = (
         alt.Chart(df[df["Variable"] != "Trend"])
         .mark_circle(size=40)
         .encode(
@@ -278,6 +298,9 @@ def __(
         )
         .add_params(selection)
         .transform_filter(selection)
+        .configure_title(fontSize=16, anchor='middle')
+        .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
+        .configure_legend(titleFontSize=12, labelFontSize=10)
     )
     return (
         b0,
@@ -296,7 +319,7 @@ def __(
 
 
 @app.cell
-def __(N, inv, mean, np, ones, sum, x1, y1):
+def _(N, inv, mean, np, ones, sum, x1, y1):
     _X = ones(N)
     _X = np.column_stack((_X, x1))
     _y = y1
@@ -310,7 +333,7 @@ def __(N, inv, mean, np, ones, sum, x1, y1):
 
 
 @app.cell
-def __(N, inv, mean, np, ones, sum, t, x2, y1):
+def _(N, inv, mean, np, ones, sum, t, x2, y1):
     _X = ones(N)
     _X = np.column_stack((_X, x2, t))
     _y = y1
@@ -324,7 +347,7 @@ def __(N, inv, mean, np, ones, sum, t, x2, y1):
 
 
 @app.cell
-def __(N, R_squared1, R_squared2, inv, mean, mo, np, ones, sum, x2, y1):
+def _(N, R_squared1, R_squared2, inv, mean, mo, np, ones, sum, x2, y1):
     _X = ones(N)
     _X = np.column_stack((_X, x2))
     _y = y1
@@ -349,7 +372,7 @@ def __(N, R_squared1, R_squared2, inv, mean, mo, np, ones, sum, x2, y1):
 
 
 @app.cell
-def __(N, inv, mean, mo, np, ones, randint, space, sum):
+def _(N, inv, mean, mo, np, ones, randint, space, sum):
     np.random.seed(11)
     I = randint(48_000, 50_000, 100)
     C = I - randint(2_000, 4_000, N)
@@ -379,7 +402,7 @@ def __(N, inv, mean, mo, np, ones, randint, space, sum):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     trend_md = mo.md(
     """
     \\( Y \\) is randomly generated trending variable
@@ -397,7 +420,7 @@ def __(mo):
 
 
 @app.cell
-def __(mo, models, trend_md, trend_vars_scatter):
+def _(mo, models, trend_md, trend_vars_scatter):
     trend_graph = mo.hstack(
         [trend_vars_scatter, mo.vstack([models, trend_md], gap=5)]
     )
@@ -405,7 +428,7 @@ def __(mo, models, trend_md, trend_vars_scatter):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     r_sq_not_useful_md = mo.md(
         "The R-squared of the model is unsurprisingly high -> savings and consumption are able to estimate ones invome very well. This does not make the model really that useful."
     )
@@ -413,25 +436,27 @@ def __(mo):
 
 
 @app.cell
-def __(chart_rs, mo, n_reg, o_):
+def _(chart_rs, mo, n_reg, o_):
     r_sq_nondec = mo.hstack([o_, mo.vstack([n_reg, chart_rs])], align="center")
     return (r_sq_nondec,)
 
 
 @app.cell
-def __(
+def _(
     headline,
     headline_1,
     headline_2,
     headline_2a,
     headline_2b,
     intuition,
+    main_menu,
     mo,
     model_cons_md,
     r_sq_nondec,
     r_sq_not_useful_md,
     trend_graph,
 ):
+    mo.vstack([main_menu.right(),
     mo.carousel(
         [
             headline,
@@ -446,6 +471,7 @@ def __(
             r_sq_not_useful_md,
         ]
     )
+    ])
     return
 
 

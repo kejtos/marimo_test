@@ -11,7 +11,7 @@
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App(
     width="medium",
     layout_file="layouts/adding_observations.grid.json",
@@ -23,6 +23,7 @@ def _():
     import marimo as mo
     import altair as alt
     import pandas as pd
+    _ = alt.theme.enable('dark')
     return alt, mo, pd
 
 
@@ -37,13 +38,17 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    main_menu = mo.Html(f'<a href="https://kejtos.github.io/materials/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
     return (main_menu,)
 
 
 @app.cell
 def _(main_menu):
-    main_menu
+    main_menu.right()
     return
 
 

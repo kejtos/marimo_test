@@ -5,14 +5,14 @@
 #     "marimo",
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
-#     "scipy==1.15.1",
+#     "scipy==1.15.2",
 # ]
 # theme = "dark"
 # ///
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App(
     width="medium",
     layout_file="layouts/hypothesis_testing.grid.json",
@@ -28,6 +28,7 @@ def _():
     from scipy.stats import norm, t, f
     from numpy.linalg import inv
     from scipy import stats
+    _ = alt.theme.enable('dark')
     return alt, f, inv, mo, norm, np, pd, stats, t
 
 
@@ -54,6 +55,22 @@ def _(mo, str_1s_t, str_2s_t):
         # full_width=True
     )
     return (distribution,)
+
+
+@app.cell
+def _(mo):
+    main_menu = mo.Html(
+        f'<a href="https://kejtos.github.io/marimo_test/" target="_parent" '
+        f'style="display: inline-block; border: 1px solid #ccc; border-radius: 8px; padding: 4px 8px; font-size: 11px;">'
+        f'{mo.icon("carbon:return")} Back to the menu</a>'
+    )
+    return (main_menu,)
+
+
+@app.cell
+def _(main_menu):
+    main_menu.right()
+    return
 
 
 @app.cell(hide_code=True)

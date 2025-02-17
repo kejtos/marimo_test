@@ -20,13 +20,13 @@ def _():
 
 @app.cell
 def _(mo):
-    main_menu = mo.Html(f'<a href="https://kejtos.github.io/marimo_test/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
+    main_menu = mo.Html(f'<a href="https://kejtos.github.io/materials/" target="_parent">{mo.icon('carbon:return')} Back to the menu</a>')
     return (main_menu,)
 
 
 @app.cell
 def _(main_menu):
-    main_menu
+    main_menu.right()
     return
 
 
@@ -50,7 +50,7 @@ def _(mo):
         y_i=\\beta_0 + \\beta_1x_i+u_i
         \\]
 
-        Total variability of the model is measured as the sum of squares of deviations from the mean TSS (Total Sum of Squares). We then define the explained variability as the sum of squares of the difference between the mean and the fit ESS (Explained Sum of Squares). Last, we define the unexplained variability as the sum of squares of deviations from the fit RSS (Resisual Sum of Squares)[^1]. Thus, we get:
+        Total variability of the model is measured as the sum of squares of deviations from the mean TSS (Total Sum of Squares). We then define the explained variability as the sum of squares of the difference between the mean and the fit ESS (Explained Sum of Squares). Last, we define the unexplained variability as the sum of squares of deviations from the fit RSS (Resisual Sum of Squares)(You can find different combinations of abbreviations). Thus, we get:
 
         \\[
         \\text{TSS} = \\sum_{i=1}^{n} (y_i-\\overline{y}_i)^2 \\\\
@@ -63,8 +63,6 @@ def _(mo):
         \\[
         R^2 = \\frac{\\text{ESS}}{\\text{TSS}} = 1-\\frac{\\text{RSS}}{\\text{TSS}}
         \\]
-
-        [^1]: You can find different combinations of abbreviations.
         """
     )
     return
@@ -73,17 +71,11 @@ def _(mo):
 @app.cell
 def _(mo):
     mo.md(
-    f"""You can visualize all the squares and \\(R^2\\) in the following GeoGebra tool[^2].'
+    f'''You can visualize all the squares and \\(R^2\\) in the following GeoGebra tool. Sorry for the flashbang, GeoGebra does not ahve dark mode. Use fullscreen. Depending on your resolution, the spacing may bit may not be wrong.
 
-    {mo.iframe('<iframe src="https://www.geogebra.org/classic/xxrvsmat?embed" width="950" height="650" allowfullscreen style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>', height=650)}
-
-    [^2]: Sorry for the light mode. Use fullscreen. Depending on your resolution, the spacing may bit may not be wrong."""
+    {mo.iframe('<iframe src="https://www.geogebra.org/classic/xxrvsmat?embed" width="950" height="650" allowfullscreen style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>', height=700)}
+    '''
     )
-    return
-
-
-@app.cell
-def _():
     return
 
 
@@ -95,7 +87,7 @@ def _(mo):
 
 @app.cell
 def _(main_menu2):
-    main_menu2
+    main_menu2.right()
     return
 
 

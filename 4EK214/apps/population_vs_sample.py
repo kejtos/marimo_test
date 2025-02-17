@@ -11,7 +11,7 @@
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App(
     width="medium",
     layout_file="layouts/population_vs_sample.grid.json",
@@ -21,6 +21,7 @@ app = marimo.App(
 @app.cell
 def _():
     import altair as alt
+    _ = alt.theme.enable('dark')
     return (alt,)
 
 
@@ -29,8 +30,9 @@ def _():
     import marimo as mo
     import numpy as np
     import pandas as pd
-    from helpers.plot_beauty import beauty_altair, TEAL, GREEN
-    return GREEN, TEAL, beauty_altair, mo, np, pd
+    TEAL = '#56B4E9'
+    GREEN = '#009E73'
+    return GREEN, TEAL, mo, np, pd
 
 
 @app.cell
@@ -160,7 +162,6 @@ def _(
     GREEN,
     TEAL,
     alt,
-    beauty_altair,
     mo,
     pop_df,
     sample_df,
@@ -202,7 +203,12 @@ def _(
     )
 
     combined_chart = mo.ui.altair_chart(
-        beauty_altair(alt.vconcat(pop_hist, sample_hist).resolve_scale(x="shared")),
+        alt
+        .vconcat(pop_hist, sample_hist)
+        .resolve_scale(x="shared")
+        .configure_title(fontSize=16, anchor='middle')
+        .configure_axis(titleFontSize=12, labelFontSize=10, grid=False)
+        .configure_legend(titleFontSize=12, labelFontSize=10),
         chart_selection=False
     )
     return (
