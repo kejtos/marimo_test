@@ -53,9 +53,9 @@ def _(main_menu):
 def _(mo):
     mo.md(
         """
-        ## 1. Econometric Paradigms
+        ## Modeling Paradigms
 
-        Let's make a simple econometric model:
+        Let's imagine a simple econometric model:
 
         $$
         y = \\beta_0 + \\beta_1 x + \\varepsilon
@@ -63,19 +63,21 @@ def _(mo):
 
         Two or three approaches are generally taken in econometric (and not only econometric) modeling depending on the goal of the analysis.
 
-        ### To **explain** relationship between $x$ and $y$
+        ### 1. To **explain** relationship between $x$ and $y$
 
-        We care about the existence and size of a relatioship between variables. We use this when we care about ifs and whys, which should influence our decision making. We are concerned about the sign and the size of $\\beta_1$, and about how much confidence we have in that $\\beta_1$.
+        We care about the existence and size of a relatioship between variables. We use this when we care about ifs and whys, which should influence our decision making. We are concerned about the **sign** and the **size** of $\\beta_1$, and the **level of confidence** in that $\\beta_1$.
 
-        #### Descriptive
+        #### a. Descriptive
         Here, we just describe relationship between variables. $\\beta_1$ shows the size of the relationship between $x$ and $y$ of size.
 
-        #### Structural (Causal)
+        #### b. Structural (Causal)
         Here, we attempt to identify causal relationships. $\\beta_1$ shows how much does $x$ cause $y$.
 
-        ### To **predict** $y$
+        ### 2. To **predict** $y$
 
-        We do not care as much about the existence and size of a relatioship between variables, but rather about how well can our model predict future $y$. We are concerned about how close are our predictions to newly observed values of y.
+        We do not care as much about the existence and size of a relatioship between variables, but rather about how well can our model **predict** future $y$. We are concerned about how close our predictions are to newly observed values of y.
+
+        You might often see an alterantive naming, which categorizes models into **inferential** (we try to infere) or **predicive** (we try to predict). It might not be obvious, but the difference **matters**. It is not just a philosophical mumbling, but it influences modeling choices -> there are ways to sacrifice interpretability for improved performance. This course, deal entirely with the first approach.
         """
     )
     return
@@ -100,21 +102,13 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(
-        """
-        ## 2. Causality
-
-        The structural paradigm attempts to find the causal effects of variables. However, identifying genuine causal effects is difficult, and various methods have been developed to address these issues.
-        """
-    )
-    return
-
-
-@app.cell(hide_code=True)
 def _(chart, mo):
     mo.md(
         f"""
+    ## Causality
+
+    The structural paradigm attempts to find the causal effects of variables. However, identifying genuine causal effects is difficult.
+
     ### Correlation vs causation
 
     Correlation does not imply causation. Just because I find (or see) a relationship between variables $x$ and $y$, it does not mean that $x$ causes $y$ or that changes in $y$ happened due to changes in $x$.
@@ -131,9 +125,9 @@ def _(chart, mo):
 
     Even if the relationship between $x$ and $y$ is genuine, the causal relationship can go in different directions.
 
-    1. $ x \\rightarrow y $, in other words $x$ causes $y$
-    2. $ y \\rightarrow x $, in other words $y$ causes $x$
-    3. $ x \\leftarrow z \\rightarrow y $, in other words $z$ cause both $x$ and $y$.
+    1. \\( x \\rightarrow y \\), in other words $x$ causes $y$
+    2. \\( y \\rightarrow x \\), in other words $y$ causes $x$
+    3. \\( x \\leftarrow z \\rightarrow y \\), in other words $z$ cause both $x$ and $y$.
 
     Few examples of the possible relationships:
     """
@@ -159,7 +153,7 @@ def _(mo):
         """
         When trying to infer causality, different experimental designs provide varying degrees of credibility:
 
-        **Natural Experiments:** When something outside of the power of hte investigator ('natural') split subjects into two groups. For instance, South vs North Korea, Czechia vs Slovakia, Vietnam War draft etc.
+        **Natural Experiments:** When something outside of the power of the investigator ('natural') split subjects into two groups. For instance, South vs North Korea, Czechia vs Slovakia, Vietnam War draft etc.
 
         **Randomized Experiments:** Individuals (or units) are randomly assigned to treatment and control groups by the researchers. 
 
@@ -168,12 +162,6 @@ def _(mo):
         **Ceteris Paribus modeling:** Regression attempts to model the effect of $x$ on $y$ ceteris paribus ('all else staying the same'). It is used as a complement or a substitute to the experimental design. Estimating relationships ceteris paribus do not guarantee we find genuine causal effects, but it is often the best we can do.
         """
     )
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md("""The descriptive and structural paradigm are often used somewhat interchangably, but we need to take extra care when we try to imply or infer an actual causal relationship. You might often see alterantive naming, which categorizes models into **inferential** or **predicive**.""")
     return
 
 
@@ -352,7 +340,7 @@ def _(alt, mo, pl):
     return chart, df, scatter
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     main_menu2 = mo.Html(
         f'<a href="https://kejtos.github.io/materials/" target="_parent" '
@@ -362,7 +350,7 @@ def _(mo):
     return (main_menu2,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(main_menu2):
     main_menu2.right()
     return

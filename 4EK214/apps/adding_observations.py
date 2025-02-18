@@ -6,6 +6,8 @@
 #     "pandas==2.2.3",
 #     "numpy==2.2.3",
 # ]
+#
+# [tool.marimo.display]
 # theme = "dark"
 # ///
 
@@ -35,10 +37,9 @@ def _(alt):
 @app.cell
 def _(mo):
     import numpy as np
-    from numpy.linalg import inv
 
     mo.show_code()
-    return inv, np
+    return (np,)
 
 
 @app.cell
@@ -134,8 +135,8 @@ def _(N_slider, const, height, np, pd, weight):
 
 
 @app.cell
-def _(X, inv, mo, y):
-    intercept, slope = inv(X.T @ X) @ X.T @ y
+def _(X, mo, np, y):
+    intercept, slope = np.linalg.inv(X.T @ X) @ X.T @ y
 
     mo.show_code()
     return intercept, slope
