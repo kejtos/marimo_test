@@ -116,7 +116,7 @@ def export_course(course, dir):
             continue
 
     for path in dir_path.rglob("*.py"):
-        if "helpers" not in path.parts:
+        if "helpers" not in path.parts and not path.parts[-1].startswith('_'):
             all_notebooks.append(str(path))
 
     if not all_notebooks:
@@ -124,7 +124,7 @@ def export_course(course, dir):
         return
 
     for nb in all_notebooks:
-        export_html_wasm(nb, dir, as_app='apps' in nb and not nb.startswith('_'))
+        export_html_wasm(nb, dir, as_app='apps' in nb and not nb.split('\\')[-1].startswith('_'))
 
     return all_notebooks
 
