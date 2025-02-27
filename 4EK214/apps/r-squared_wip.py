@@ -3,6 +3,7 @@
 # dependencies = [
 #     "marimo",
 # ]
+# [tool.marimo.display]
 # theme = "dark"
 # ///
 

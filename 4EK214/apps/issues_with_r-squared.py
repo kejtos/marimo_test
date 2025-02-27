@@ -6,6 +6,7 @@
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
 # ]
+# [tool.marimo.display]
 # theme = "dark"
 # ///
 

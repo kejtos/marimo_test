@@ -6,6 +6,7 @@
 #     "numpy==2.2.3",
 #     "pandas==2.2.3",
 # ]
+# [tool.marimo.display]
 # theme = "dark"
 # ///
 
@@ -19,6 +20,12 @@ app = marimo.App(layout_file="layouts/estimator_properties.grid.json")
 def _():
     # dodelat consistency. pridat ty unbiased tak, aby byl vzdycky vygenerovanej ten nejvic a dynamicky se to menilo
     # dodelat to sampl,e tlacitko
+    return
+
+
+@app.cell
+def _(alt):
+    _ = alt.theme.enable('dark')
     return
 
 

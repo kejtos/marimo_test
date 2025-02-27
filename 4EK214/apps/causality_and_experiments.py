@@ -5,6 +5,7 @@
 #     "marimo",
 #     "polars==1.22.0",
 # ]
+# [tool.marimo.display]
 # theme = "dark"
 # ///
 
